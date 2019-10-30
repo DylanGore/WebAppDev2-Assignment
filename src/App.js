@@ -1,15 +1,16 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-
+import { BrowserRouter } from 'react-router-dom';
+import NavbarApp from './components/layout/NavbarApp';
+import Footer from './components/layout/Footer';
 function App() {
     return (
-        <React.Fragment>
-            <CssBaseline />
-            <Container maxWidth="xl">
-                <h1>React App</h1>
-            </Container>
-        </React.Fragment>
+        <BrowserRouter>
+            <React.Fragment>
+                <NavbarApp />
+                <h1>Hello, world!</h1>
+                <Footer />
+            </React.Fragment>
+        </BrowserRouter>
     );
 }
 

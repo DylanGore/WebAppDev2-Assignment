@@ -4,22 +4,36 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.5.2",
-    "@material-ui/icons": "^4.5.1",
+    "bootstrap": "^4.3.1",
+    "node-sass": "^4.13.0",
     "react": "^16.11.0",
+    "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "typescript": "^3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook --port 3001",
     "build-storybook": "build-storybook"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4,
+    "printWidth": 120
   },
   "browserslist": {
     "production": [
@@ -38,9 +52,12 @@
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-knobs": "^5.2.5",
     "@storybook/addon-links": "^5.2.5",
+    "@storybook/addon-viewport": "^5.2.5",
     "@storybook/addons": "^5.2.5",
     "@storybook/react": "^5.2.5",
     "babel-loader": "^8.0.6",
-    "json-server": "^0.15.1"
+    "json-server": "^0.15.1",
+    "prettier": "^1.18.2",
+    "storybook-react-router": "^1.0.8"
   }
 }

@@ -1,0 +1,11 @@
+// Variable Overrides
+// TODO
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+// Footer
+.footer {
+    text-align: center;
+    color: $white;
+}
