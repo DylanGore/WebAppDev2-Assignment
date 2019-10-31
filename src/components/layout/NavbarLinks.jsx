@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 
 const PublicLinks = () => {
     return (
-        <Nav.Link as={Link} to="/">
-            Home
-        </Nav.Link>
+        <Fragment>
+            <Nav.Link as={Link} to="/">
+                Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/dashboard">
+                Dashboard
+            </Nav.Link>
+        </Fragment>
     );
 };
 
