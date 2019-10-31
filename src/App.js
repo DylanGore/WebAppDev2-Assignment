@@ -6,6 +6,8 @@ import Dashboard from './components/pages/Dashboard';
 import Projects from './components/pages/Projects';
 import NotFound from './components/error/NotFound';
 import Project from './components/projects/Project';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 function App() {
     return (
         <BrowserRouter>
@@ -17,6 +19,8 @@ function App() {
                     </Route>
                     <Route exact path="/dashboard" component={Dashboard} />
                     <Route exact path="/projects" component={Projects} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
                     <Route exact path="/projects/:id" component={Project} />
                     <Route exact path="/404" component={NotFound} />
                     <Route path="*">
