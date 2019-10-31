@@ -3,18 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProjectList from '../projects/ProjectList';
-class Dashboard extends Component {
+
+class Projects extends Component {
     render() {
         return (
             <Container fluid>
                 <Row>
                     <Col>
-                        <h1>Dashboard</h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6} sm={12}>
-                        <h2>Active Projects</h2>
+                        <h1>Projects</h1>
                         <ProjectList />
                     </Col>
                 </Row>
@@ -23,4 +19,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default Projects;
