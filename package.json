@@ -6,17 +6,21 @@
     "@material-ui/core": "^4.5.2",
     "@mdi/js": "^4.5.95",
     "@mdi/react": "^1.2.1",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "firebase": "^7.2.3",
     "node-sass": "^4.13.0",
+    "npm": "^6.12.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
+    "react-redux-firebase": "^3.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
+    "redux-firestore": "^0.9.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.6.4"
   },
@@ -26,7 +30,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook --port 3001",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "fake-backend": "json-server db.json -p 3002"
   },
   "eslintConfig": {
     "extends": "react-app",

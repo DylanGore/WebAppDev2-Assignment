@@ -1,8 +1,6 @@
-import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
-const FirebaseContext = React.createContext(null);
+import 'firebase/firestore';
 
 // Firebase configuration - values pulled from .env file
 const firebaseConfig = {
@@ -15,7 +13,5 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 // Initialize Firebase
-const fb = firebase.initializeApp(firebaseConfig);
-
-export default { fb };
-export { FirebaseContext };
+firebase.initializeApp(firebaseConfig);
+export default firebase;

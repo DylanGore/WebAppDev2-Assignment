@@ -7,6 +7,17 @@ const initialState = {
 };
 
 const projectReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'ADD_PROJECT':
+            // TODO add to db
+            console.log('Created Project', action.project);
+            break;
+        case 'ADD_PROJECT_ERROR':
+            console.log('Error while creating project', action.error);
+            break;
+        default:
+            console.log('Invalid Action');
+    }
     return state;
 };
 
