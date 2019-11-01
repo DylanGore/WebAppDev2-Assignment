@@ -8,6 +8,6 @@ const stories = storiesOf('Pages', module);
 
 stories.addDecorator(StoryRouter());
 
-stories.add('Dashboard', () => {
-    return <Dashboard />;
-});
+// stories.add('Dashboard', () => {
+//     return <Dashboard />;
+// });

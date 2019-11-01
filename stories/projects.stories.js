@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs, text, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 // My Components
 import Project from '../src/components/projects/Project';
@@ -23,15 +23,21 @@ stories.add('Project', () => {
     return <Project title={title} type={type} description={description} due={due} />;
 });
 stories.add('SimpleProject', () => {
-    const id = text('ID', 'sb1');
+    const id = number('ID', 1);
     const title = text('Title', 'Sample Project');
     const type = text('Type', 'Example');
     const description = text(
         'Description',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum libero non volutpat laoreet.Praesent dignissim dapibus ex, et bibendum sem gravida varius. Pellentesque consequat odio at molestieplacerat. Curabitur sed aliquam lacus, non mollis ex. Quisque sed felis nec tortor ornare interdum.'
     );
-    return <SimpleProject id={id} title={title} type={type} description={description} />;
+
+    const project = { id: id, title: title, type: type, description: description };
+    return <SimpleProject project={project} />;
 });
 stories.add('Project List', () => {
-    return <ProjectList />;
+    const projectList = [
+        { id: 1, title: 'Project 1', type: 'Example', description: 'Project 1 Description' },
+        { id: 2, title: 'Project 2', type: 'Example', description: 'Project 2 Description' }
+    ];
+    return <ProjectList projects={projectList} />;
 });

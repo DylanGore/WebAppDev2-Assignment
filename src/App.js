@@ -1,17 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, BrowserRouter, Route, Redirect } from 'react-router-dom';
+// My Components
 import NavbarApp from './components/layout/NavbarApp';
 import Footer from './components/layout/Footer';
 import Dashboard from './components/pages/Dashboard';
 import Projects from './components/pages/Projects';
-import NotFound from './components/error/NotFound';
-import Project from './components/projects/Project';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Project from './components/projects/Project';
+import NotFound from './components/error/NotFound';
+
+export const AuthContext = React.createContext(null);
+
 function App() {
     return (
-        <BrowserRouter>
-            <React.Fragment>
+        <div className="App">
+            <BrowserRouter>
                 <NavbarApp />
                 <Switch>
                     <Route exact path="/">
@@ -27,9 +31,10 @@ function App() {
                         <Redirect to="/404" />
                     </Route>
                 </Switch>
+
                 <Footer />
-            </React.Fragment>
-        </BrowserRouter>
+            </BrowserRouter>
+        </div>
     );
 }
 

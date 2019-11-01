@@ -3,8 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProjectList from '../projects/ProjectList';
+import { connect } from 'react-redux';
+
 class Dashboard extends Component {
     render() {
+        const projects = this.props.projects;
         return (
             <Container fluid>
                 <Row>
@@ -15,7 +18,7 @@ class Dashboard extends Component {
                 <Row>
                     <Col md={6} sm={12}>
                         <h2>Active Projects</h2>
-                        <ProjectList />
+                        <ProjectList projects={projects} />
                     </Col>
                 </Row>
             </Container>
@@ -23,4 +26,10 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+    return {
+        projects: state.project.projects
+    };
+};
+
+export default connect(mapStateToProps)(Dashboard);

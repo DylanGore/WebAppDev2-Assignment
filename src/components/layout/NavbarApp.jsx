@@ -23,5 +23,4 @@ const NavbarApp = () => {
         </Navbar>
     );
 };
-
 export default NavbarApp;
