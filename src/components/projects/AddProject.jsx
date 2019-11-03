@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { addProject } from '../../store/actions/projectActions';
-import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -23,7 +21,7 @@ class AddProject extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.addProject(this.state);
+        console.log(this.state);
     };
 
     render() {
@@ -65,13 +63,4 @@ class AddProject extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addProject: project => dispatch(addProject(project))
-    };
-};
-
-export default connect(
-    null,
-    mapDispatchToProps
-)(AddProject);
+export default AddProject;

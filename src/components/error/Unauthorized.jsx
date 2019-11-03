@@ -7,20 +7,19 @@ import Icon from '@mdi/react';
 import { mdiAlert, mdiHome } from '@mdi/js';
 import { Link } from 'react-router-dom';
 
-const NotFound = () => {
+const Unauthorized = () => {
     return (
         <Container fluid>
             <Row className="justify-content-center">
                 <Col className="text-center">
                     <Icon path={mdiAlert} title="Error 404" size={5} color="red" />
                     <h1>
-                        Error 404
+                        Error 401
                         <br />
-                        <small className="text-muted">Not Found</small>
+                        <small className="text-muted">Unauthorized </small>
                     </h1>
                     <p className="lead">
-                        The content you are looking for could not be found at this address, please check the URL and try
-                        again.
+                        You are not authorized to view this page, please <Link to="/login">login</Link>.
                     </p>
                     <Button variant="dark" as={Link} to="/">
                         Go to Homepage <Icon path={mdiHome} title="Home" size={1} color="white" />
@@ -31,4 +30,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default Unauthorized;

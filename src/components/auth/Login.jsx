@@ -1,29 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import history from '../../routes/history';
+import firebase from '../../config/firebaseConfig';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import Unauthorized from '../error/Unauthorized';
+const Login = () => {
+    const [user] = useAuthState(firebase.auth());
 
-class Login extends Component {
-    state = {
+    const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        message: '',
+        msgType: ''
+    });
+
+    const DisplayMessage = () => {
+        if (!formData.message) {
+            return null;
+        } else {
+            return (
+                <Alert variant={formData.msgType} onClose={() => setFormData({ ...formData, message: '' })} dismissible>
+                    {formData.message}
+                </Alert>
+            );
+        }
     };
 
-    handleChange = e => {
-        this.setState({
+    const handleChange = e => {
+        setFormData({
+            ...formData,
             [e.target.id]: e.target.value
         });
     };
 
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state);
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(formData.email, formData.password)
+            .then(() => {
+                setFormData({ ...formData, message: 'Login Successful!', msgType: 'success' });
+                history.push('/dashboard');
+            })
+            .catch(err => {
+                setFormData({ ...formData, message: err.message, msgType: 'danger' });
+            });
     };
 
-    render() {
+    if (!user) {
         return (
             <Container fluid>
                 <Row className="justify-content-center text-center">
@@ -33,19 +63,16 @@ class Login extends Component {
                 </Row>
                 <Row className="justify-content-center">
                     <Col md={6} sm={12}>
-                        <Form onSubmit={this.handleSubmit}>
+                        <DisplayMessage />
+                        <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="email">
                                 <Form.Label>E-mail address:</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="example@example.com"
-                                    onChange={this.handleChange}
-                                />
+                                <Form.Control type="email" placeholder="example@example.com" onChange={handleChange} />
                             </Form.Group>
 
                             <Form.Group controlId="password">
                                 <Form.Label>Password:</Form.Label>
-                                <Form.Control type="password" placeholder="Password" onChange={this.handleChange} />
+                                <Form.Control type="password" placeholder="Password" onChange={handleChange} />
                             </Form.Group>
 
                             <p className="text-muted">
@@ -60,7 +87,9 @@ class Login extends Component {
                 </Row>
             </Container>
         );
+    } else {
+        return <Unauthorized />;
     }
-}
+};
 
 export default Login;

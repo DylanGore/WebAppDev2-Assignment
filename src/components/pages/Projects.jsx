@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -23,14 +20,4 @@ class Projects extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state);
-    return {
-        projects: state.firestore.ordered.projects
-    };
-};
-
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([{ collection: 'projects' }])
-)(Projects);
+export default Projects;
