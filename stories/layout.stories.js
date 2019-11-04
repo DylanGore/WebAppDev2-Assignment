@@ -5,6 +5,7 @@ import StoryRouter from 'storybook-react-router';
 import NavbarApp from '../src/components/layout/NavbarApp';
 import NavbarLinks from '../src/components/layout/NavbarLinks';
 import Footer from '../src/components/layout/Footer';
+import Loading from '../src/components/layout/Loading';
 
 const stories = storiesOf('Layout', module);
 
@@ -18,4 +19,7 @@ stories.add('Navbar Links', () => {
 });
 stories.add('Footer', () => {
     return <Footer />;
+});
+stories.add('Loading Icon', () => {
+    return <Loading />;
 });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import history from '../../routes/history';
+import history from '../../config/history';
 import firebase from '../../config/firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Container from 'react-bootstrap/Container';

@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import history from '../../routes/history';
+import history from '../../config/history';
 import firebase from '../../config/firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Icon from '@mdi/react';
-import { mdiViewDashboardVariant } from '@mdi/js';
+import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant } from '@mdi/js';
 // Navbar Links
 import NavbarLinks from './NavbarLinks';
 
-const NavbarApp = props => {
+const NavbarApp = () => {
     const [user] = useAuthState(firebase.auth());
     const logout = () => {
         firebase
@@ -25,13 +25,21 @@ const NavbarApp = props => {
             });
     };
 
+    const SelectNavbarLinks = () => {
+        return user ? <NavbarLinks /> : null;
+    };
+
     const DisplayUserLinks = () => {
         if (user) {
-            return <Nav.Link onClick={logout}>Log out</Nav.Link>;
+            return (
+                <Nav.Link onClick={logout}>
+                    <Icon path={mdiLogoutVariant} size={1} color="white" /> Log out
+                </Nav.Link>
+            );
         } else {
             return (
                 <Nav.Link as={Link} to="/login">
-                    Log In
+                    <Icon path={mdiLoginVariant} size={1} color="white" /> Log In
                 </Nav.Link>
             );
         }
@@ -46,7 +54,10 @@ const NavbarApp = props => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <NavbarLinks />
+                    <Nav.Link as={Link} to="/">
+                        Home
+                    </Nav.Link>
+                    <SelectNavbarLinks />
                 </Nav>
                 <Nav className="ml-auto">
                     <DisplayUserLinks />
