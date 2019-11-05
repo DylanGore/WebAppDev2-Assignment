@@ -1,36 +1,41 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import axios from 'axios';
+import history from '../../config/history';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 const Project = props => {
-    console.log(props);
-    var projectId = props.match.params.id;
-    // Display dummy ID if viewing component in Storybook
-    if (props.match.params.id == null) {
-        projectId = 'sb1';
-    }
-    var title = props.title;
-    var type = props.type;
-    var description = props.description;
-    var due = props.due;
-    // projectId.propTypes = {
-    //     match: PropTypes.object
-    // };
+    const [project, setProject] = useState({});
+
+    useEffect(() => {
+        // Get the project id that was passed in via route
+        var id = props.match.params.id.toString();
+        // Use axios to request the project info, redirect to 404 if there is an error
+        axios
+            .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id)
+            .then(res => {
+                setProject(res.data);
+            })
+            .catch(() => {
+                history.push('/404');
+            });
+    }, [props.match.params.id]);
+
     return (
         <Container fluid>
             <Row>
                 <Col>
                     <h1>
-                        {title} <small>(ID: {projectId})</small>
+                        {project.title} <small>(ID: {project.id})</small>
                     </h1>
                     <h2>
-                        <small className="text-muted">{type}</small>
+                        <small className="text-muted">{project.type}</small>
                     </h2>
-                    <p className="lead">{description}</p>
+                    <p className="lead">{project.description}</p>
                     <p>
-                        <strong>Due:</strong> {due}
+                        <strong>Due:</strong> {project.due}
                     </p>
                     <h3>Tasks</h3>
                     <ListGroup>
