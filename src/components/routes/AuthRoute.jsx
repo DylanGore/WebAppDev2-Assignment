@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import firebase from '../../config/firebaseConfig';
+import firebase from '../../config/firebase';
 import Unauthorized from '../error/Unauthorized';
 
 const AuthRoute = ({ component, ...options }) => {

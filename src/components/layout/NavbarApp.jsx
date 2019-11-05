@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import history from '../../config/history';
-import firebase from '../../config/firebaseConfig';
+import firebase from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';

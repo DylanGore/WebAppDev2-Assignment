@@ -1,5 +1,5 @@
 import { configure } from '@storybook/react';
-import '../src/app.scss';
+import '../src/scss/app.scss';
 import { addParameters } from '@storybook/react';
 import { themes } from '@storybook/theming';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
@@ -16,4 +16,4 @@ addParameters({
 });
 
 // automatically import all files ending in *.stories.js
-configure(require.context('../stories', true, /\.stories\.js$/), module);
+configure(require.context('../src/stories', true, /\.stories\.js$/), module);

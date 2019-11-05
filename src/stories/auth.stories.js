@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import StoryRouter from 'storybook-react-router';
 // My Components
-import Login from '../src/components/auth/Login';
-import Register from '../src/components/auth/Register';
-import ForgotPassword from '../src/components/auth/ForgotPassword';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
+import ForgotPassword from '../components/auth/ForgotPassword';
 
 const stories = storiesOf('Authentication', module);
 

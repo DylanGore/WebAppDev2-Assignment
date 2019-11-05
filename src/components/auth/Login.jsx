@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../../config/history';
-import firebase from '../../config/firebaseConfig';
+import firebase from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';

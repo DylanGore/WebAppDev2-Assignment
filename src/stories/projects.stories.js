@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs, text, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 // My Components
-import Project from '../src/components/projects/Project';
-import SimpleProject from '../src/components/projects/SimpleProject';
-import ProjectList from '../src/components/projects/ProjectList';
-import AddProject from '../src/components/projects/AddProject';
+import Project from '../components/projects/Project';
+import SimpleProject from '../components/projects/SimpleProject';
+import ProjectList from '../components/projects/ProjectList';
+import AddProject from '../components/projects/AddProject';
 
 const stories = storiesOf('Projects', module);
 
