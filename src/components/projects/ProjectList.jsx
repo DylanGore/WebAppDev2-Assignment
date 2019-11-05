@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SimpleProject from './SimpleProject';
 
-const ProjectList = props => {
+const ProjectList = () => {
     const [projects, setProjects] = useState(null);
 
     // Use axios to request the list of all projects
