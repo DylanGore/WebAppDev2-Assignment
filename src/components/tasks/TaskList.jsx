@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const TaskList = ({ project_id }) => {
+const TaskList = ({ project_id, limit }) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
@@ -10,16 +10,29 @@ const TaskList = ({ project_id }) => {
             axios
                 .get(process.env.REACT_APP_BACKEND_LOC + 'tasks?project=' + project_id)
                 .then(res => {
-                    console.log(res.data);
                     setTasks(res.data);
                 })
                 .catch(err => {
                     console.log(err.message);
                 });
         } else {
-            setTasks([{ id: 0, project: 0, description: 'Example Task', due: 'timestamp' }]);
+            var url = '';
+            if (limit && limit !== 0) {
+                url = process.env.REACT_APP_BACKEND_LOC + 'tasks?start=0&_limit=' + limit;
+            } else {
+                url = process.env.REACT_APP_BACKEND_LOC + 'tasks';
+            }
+
+            axios
+                .get(url)
+                .then(res => {
+                    setTasks(res.data);
+                })
+                .catch(err => {
+                    console.log(err.message);
+                });
         }
-    }, [project_id]);
+    }, [project_id, limit]);
 
     const getTaskColor = task => {
         switch (task.state) {

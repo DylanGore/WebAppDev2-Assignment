@@ -18,6 +18,7 @@ import AddProject from '../projects/AddProject';
 import NotFound from '../error/NotFound';
 import Home from '../pages/Home';
 import ResetPassword from '../auth/ForgotPassword';
+import AddTask from '../tasks/AddTask';
 
 function RouterApp() {
     return (
@@ -28,6 +29,7 @@ function RouterApp() {
                 <AuthRoute exact path="/dashboard" component={Dashboard} />
                 <AuthRoute exact path="/projects" component={Projects} />
                 <AuthRoute exact path="/projects/add" component={AddProject} />
+                <AuthRoute exact path="/tasks/add" component={AddTask} />
                 <PublicRoute exact path="/login" component={Login} />
                 <PublicRoute exact path="/register" component={Register} />
                 <Route exact path="/reset-password" component={ResetPassword} />

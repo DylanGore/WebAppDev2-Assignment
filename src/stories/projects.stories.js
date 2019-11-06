@@ -39,9 +39,6 @@ stories.add('SimpleProject', () => {
     return <SimpleProject project={project} />;
 });
 stories.add('Project List', () => {
-    const projectList = [
-        { id: 1, title: 'Project 1', type: 'Example', description: 'Project 1 Description' },
-        { id: 2, title: 'Project 2', type: 'Example', description: 'Project 2 Description' }
-    ];
-    return <ProjectList projects={projectList} />;
+    const limit = number('Project Limit', 0);
+    return <ProjectList limit={limit} />;
 });

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
+import Moment from 'react-moment';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import TaskList from '../tasks/TaskList';
+import Loading from '../layout/Loading';
 const Project = props => {
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
@@ -39,9 +41,9 @@ const Project = props => {
         setLoading(false);
     }, [props]);
 
-    return (
-        <Container fluid>
-            {!loading && (
+    if (!loading) {
+        return (
+            <Container fluid>
                 <Row>
                     <Col>
                         <h1>
@@ -52,15 +54,17 @@ const Project = props => {
                         </h2>
                         <p className="lead">{project.description}</p>
                         <p>
-                            <strong>Due:</strong> {project.due}
+                            <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
                         </p>
                         <h3>Tasks</h3>
                         {project.id !== 0 && <TaskList project_id={[project.id]} />}
                     </Col>
                 </Row>
-            )}
-        </Container>
-    );
+            </Container>
+        );
+    } else {
+        return <Loading />;
+    }
 };
 
 export default withRouter(Project);

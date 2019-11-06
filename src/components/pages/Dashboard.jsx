@@ -1,28 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { mdiPlus } from '@mdi/js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ProjectList from '../projects/ProjectList';
+import TaskList from '../tasks/TaskList';
+import Button from 'react-bootstrap/Button';
+import Icon from '@mdi/react';
 
-class Dashboard extends Component {
-    render() {
-        const projects = this.props.projects;
-        return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h1>Dashboard</h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6} sm={12}>
-                        <h2>Active Projects</h2>
-                        <ProjectList projects={projects} />
-                    </Col>
-                </Row>
-            </Container>
-        );
-    }
-}
+const Dashboard = () => {
+    return (
+        <Container fluid>
+            <Row>
+                <Col>
+                    <h1>Dashboard</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={6} sm={12}>
+                    <h2>Projects</h2>
+                    <Button className="mb-2" as={Link} to="/project/add" variant="primary" size="sm">
+                        <Icon path={mdiPlus} size={1} color="white" />
+                        Add Project
+                    </Button>
+                    <ProjectList limit={2} />
+                </Col>
+                <Col md={6} sm={12}>
+                    <h2>Tasks</h2>
+                    <Button className="mb-2" as={Link} to="/tasks/add" variant="primary" size="sm">
+                        <Icon path={mdiPlus} size={1} color="white" />
+                        Add Task
+                    </Button>
+                    <TaskList limit={6} />
+                </Col>
+            </Row>
+        </Container>
+    );
+};
 
 export default Dashboard;

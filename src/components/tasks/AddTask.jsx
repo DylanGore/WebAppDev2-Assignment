@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,13 +10,25 @@ import { mdiCalendar, mdiClose } from '@mdi/js';
 import axios from 'axios';
 import Icon from '@mdi/react';
 
-const AddProject = () => {
-    const [project, setProject] = useState({});
+const AddTask = () => {
+    const [projects, setProjects] = useState(null);
+    const [task, setTask] = useState({});
     const [message, setMessage] = useState(null);
 
+    useEffect(() => {
+        axios
+            .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
+            .then(res => {
+                setProjects(res.data);
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    });
+
     const handleChange = e => {
-        setProject({
-            ...project,
+        setTask({
+            ...task,
             [e.target.id]: e.target.value
         });
     };
@@ -25,15 +37,15 @@ const AddProject = () => {
         e.preventDefault();
         const form = e.currentTarget;
 
-        // Use axios to request the list of projects to set the ID
+        // Use axios to request the list of tasks to set the ID
         axios
-            .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
+            .get(process.env.REACT_APP_BACKEND_LOC + 'tasks')
             .then(res => {
                 var newId = res.data.length + 1;
                 axios
-                    .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
+                    .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
                     .then(res => {
-                        setMessage({ type: 'success', value: 'Project Added! (ID: ' + newId + ')' });
+                        setMessage({ type: 'success', value: 'Task Added! (ID: ' + newId + ')' });
                     })
                     .catch(err => {
                         setMessage({ type: 'danger', value: err.message });
@@ -42,8 +54,6 @@ const AddProject = () => {
             .catch(err => {
                 setMessage({ type: 'danger', value: err.message });
             });
-
-        console.log(project);
 
         form.reset();
     };
@@ -64,23 +74,20 @@ const AddProject = () => {
         <Container fluid>
             <Row className="justify-content-center text-center">
                 <Col>
-                    <h1>Add a new Project</h1>
+                    <h1>Add a new Task</h1>
                 </Col>
             </Row>
             <Row className="justify-content-center">
                 <Col md={6} sm={12}>
                     <DisplayMessage />
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="title">
-                            <Form.Label>Project Title:</Form.Label>
-                            <Form.Control type="text" onChange={handleChange} />
-                        </Form.Group>
-                        <Form.Group controlId="type">
-                            <Form.Label>Type:</Form.Label>
+                        <Form.Group controlId="project">
+                            <Form.Label>Project:</Form.Label>
                             <Form.Control as="select" onChange={handleChange}>
-                                <option>Website</option>
-                                <option>College Assignment</option>
-                                <option>Personal Project</option>
+                                {projects &&
+                                    projects.map(project => {
+                                        return <option value={project.id}>{project.title}</option>;
+                                    })}
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="description">
@@ -92,8 +99,8 @@ const AddProject = () => {
                             <Form.Control
                                 as={DateTimePicker}
                                 className="dateTime"
-                                value={project.due}
-                                onChange={timestamp => setProject({ ...project, due: timestamp })}
+                                value={task.due}
+                                onChange={timestamp => setTask({ ...task, due: timestamp })}
                                 calendarIcon={<Icon path={mdiCalendar} size={1} />}
                                 clearIcon={<Icon path={mdiClose} size={1} showLeadingZeros={true} />}
                             />
@@ -108,4 +115,4 @@ const AddProject = () => {
     );
 };
 
-export default AddProject;
+export default AddTask;

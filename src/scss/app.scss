@@ -2,12 +2,13 @@
 // https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=0277BD
 $primary: #0277bd;
 $dark: #004c8c;
+$enable-rounded: false;
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 
 // Simple Project
 .simpleProject {
-    margin: 1em 0;
+    margin-bottom: 0.5em;
 }
 
 // Project List
@@ -25,4 +26,14 @@ $dark: #004c8c;
 .pageLoader {
     margin: 4em 0;
     padding: 2em;
+}
+
+.react-datetime-picker__wrapper {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.react-datetime-picker {
+    padding: 0;
 }
