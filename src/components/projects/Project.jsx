@@ -5,9 +5,10 @@ import history from '../../config/history';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ListGroup from 'react-bootstrap/ListGroup';
+import TaskList from '../tasks/TaskList';
 const Project = props => {
     const [project, setProject] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (props.match.params.id) {
@@ -22,6 +23,7 @@ const Project = props => {
                 .catch(() => {
                     history.push('/404');
                 });
+            setLoading(false);
         }
     }, [props.match.params.id]);
 
@@ -34,32 +36,29 @@ const Project = props => {
             description: props.description,
             due: props.due
         });
+        setLoading(false);
     }, [props]);
 
     return (
         <Container fluid>
-            <Row>
-                <Col>
-                    <h1>
-                        {project.title} <small>(ID: {project.id})</small>
-                    </h1>
-                    <h2>
-                        <small className="text-muted">{project.type}</small>
-                    </h2>
-                    <p className="lead">{project.description}</p>
-                    <p>
-                        <strong>Due:</strong> {project.due}
-                    </p>
-                    <h3>Tasks</h3>
-                    <ListGroup>
-                        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                        <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                        <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-                    </ListGroup>
-                </Col>
-            </Row>
+            {!loading && (
+                <Row>
+                    <Col>
+                        <h1>
+                            {project.title} <small>(ID: {project.id})</small>
+                        </h1>
+                        <h2>
+                            <small className="text-muted">{project.type}</small>
+                        </h2>
+                        <p className="lead">{project.description}</p>
+                        <p>
+                            <strong>Due:</strong> {project.due}
+                        </p>
+                        <h3>Tasks</h3>
+                        {project.id !== 0 && <TaskList project_id={[project.id]} />}
+                    </Col>
+                </Row>
+            )}
         </Container>
     );
 };

@@ -20,5 +20,48 @@
             "description": "Project description",
             "due": "1st December 2019"
         }
+    ],
+    "tasks": [{
+            "id": 1,
+            "project": 1,
+            "description": "Example Task 1",
+            "due": "timestamp",
+            "state": "in_progress"
+        },
+        {
+            "id": 2,
+            "project": 3,
+            "description": "Example Task 2",
+            "due": "timestamp",
+            "state": "overdue"
+        },
+        {
+            "id": 3,
+            "project": 1,
+            "description": "Example Task 3",
+            "due": "timestamp",
+            "state": "future"
+        },
+        {
+            "id": 4,
+            "project": 3,
+            "description": "Example Task 4",
+            "due": "timestamp",
+            "state": "complete"
+        },
+        {
+            "id": 5,
+            "project": 1,
+            "description": "Example Task 5",
+            "due": "timestamp",
+            "state": "in_progress"
+        },
+        {
+            "id": 6,
+            "project": 1,
+            "description": "Example Task 6",
+            "due": "timestamp",
+            "state": "in_progress"
+        }
     ]
 }
