@@ -20,7 +20,7 @@ const Dashboard = () => {
             <Row>
                 <Col md={6} sm={12}>
                     <h2>Projects</h2>
-                    <Button className="mb-2" as={Link} to="/project/add" variant="primary" size="sm">
+                    <Button className="mb-2" as={Link} to="/projects/add" variant="primary" size="sm">
                         <Icon path={mdiPlus} size={1} color="white" />
                         Add Project
                     </Button>

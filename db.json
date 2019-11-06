@@ -1,8 +1,10 @@
 {
-  "projects": [{
+  "projects": [
+    {
       "id": 1,
       "title": "Project 1",
       "type": "Example",
+      "client": 1,
       "description": "Project description",
       "due": "1st December 2019"
     },
@@ -10,6 +12,7 @@
       "id": 2,
       "title": "Project 2",
       "type": "Example",
+      "client": 1,
       "description": "Project description",
       "due": "1st December 2019"
     },
@@ -17,11 +20,37 @@
       "id": 3,
       "title": "Project 3",
       "type": "Example",
+      "client": 2,
       "description": "Project description",
       "due": "1st December 2019"
+    },
+    {
+      "title": "Project 4",
+      "type": "College Assignment",
+      "client": 4,
+      "description": "Example",
+      "due": "2019-12-02T23:59:00.000Z",
+      "id": 4
+    },
+    {
+      "title": "Project 5",
+      "type": "Personal Project",
+      "client": 2,
+      "description": "Example",
+      "due": "2019-12-02T23:59:00.000Z",
+      "id": 5
+    },
+    {
+      "title": "Project 6",
+      "type": "Personal Project",
+      "client": "4",
+      "description": "Example",
+      "due": "2019-11-01T13:00:00.000Z",
+      "id": 6
     }
   ],
-  "tasks": [{
+  "tasks": [
+    {
       "id": 1,
       "project": 1,
       "description": "Example Task 1",
@@ -62,6 +91,32 @@
       "description": "Example Task 6",
       "due": "2019-12-01T23:59:00.000Z",
       "state": "in_progress"
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "name": "Client 1",
+      "email": "client1@example.com",
+      "phone": "+3530800000000"
+    },
+    {
+      "id": 2,
+      "name": "Client 2",
+      "email": "client2@example.com",
+      "phone": "+3530800000000"
+    },
+    {
+      "id": 3,
+      "name": "Client 3",
+      "email": "client1@example.com",
+      "phone": "+3530800000000"
+    },
+    {
+      "name": "Client 4",
+      "email": "client4@example.com",
+      "phone": "+3530800000000",
+      "id": 4
     }
   ]
 }

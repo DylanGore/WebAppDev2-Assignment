@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,7 +12,19 @@ import Icon from '@mdi/react';
 
 const AddProject = () => {
     const [project, setProject] = useState({});
+    const [clients, setClients] = useState(null);
     const [message, setMessage] = useState(null);
+
+    useEffect(() => {
+        axios
+            .get(process.env.REACT_APP_BACKEND_LOC + 'clients')
+            .then(res => {
+                setClients(res.data);
+            })
+            .catch(err => {
+                console.log(err.message);
+            });
+    }, []);
 
     const handleChange = e => {
         setProject({
@@ -73,19 +85,28 @@ const AddProject = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="title">
                             <Form.Label>Project Title:</Form.Label>
-                            <Form.Control type="text" onChange={handleChange} />
+                            <Form.Control type="text" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="type">
                             <Form.Label>Type:</Form.Label>
-                            <Form.Control as="select" onChange={handleChange}>
+                            <Form.Control as="select" onChange={handleChange} required>
                                 <option>Website</option>
                                 <option>College Assignment</option>
                                 <option>Personal Project</option>
                             </Form.Control>
                         </Form.Group>
+                        <Form.Group controlId="client">
+                            <Form.Label>Client:</Form.Label>
+                            <Form.Control as="select" onChange={handleChange} requied>
+                                {clients &&
+                                    clients.map(client => {
+                                        return <option value={parseInt(client.id)}>{client.name}</option>;
+                                    })}
+                            </Form.Control>
+                        </Form.Group>
                         <Form.Group controlId="description">
                             <Form.Label>Description:</Form.Label>
-                            <Form.Control as="textarea" rows="3" onChange={handleChange} />
+                            <Form.Control as="textarea" rows="3" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Due:</Form.Label>
@@ -95,7 +116,7 @@ const AddProject = () => {
                                 value={project.due}
                                 onChange={timestamp => setProject({ ...project, due: timestamp })}
                                 calendarIcon={<Icon path={mdiCalendar} size={1} />}
-                                clearIcon={<Icon path={mdiClose} size={1} showLeadingZeros={true} />}
+                                clearIcon={<Icon path={mdiClose} size={1} required />}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">

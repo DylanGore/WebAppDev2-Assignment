@@ -11,6 +11,8 @@ import NavbarApp from '../layout/NavbarApp';
 import Footer from '../layout/Footer';
 import Dashboard from '../pages/Dashboard';
 import Projects from '../pages/Projects';
+import Tasks from '../pages/Tasks';
+import Clients from '../pages/Clients';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 import Project from '../projects/Project';
@@ -19,6 +21,7 @@ import NotFound from '../error/NotFound';
 import Home from '../pages/Home';
 import ResetPassword from '../auth/ForgotPassword';
 import AddTask from '../tasks/AddTask';
+import AddClient from '../clients/AddClient';
 
 function RouterApp() {
     return (
@@ -29,7 +32,10 @@ function RouterApp() {
                 <AuthRoute exact path="/dashboard" component={Dashboard} />
                 <AuthRoute exact path="/projects" component={Projects} />
                 <AuthRoute exact path="/projects/add" component={AddProject} />
+                <AuthRoute exact path="/tasks" component={Tasks} />
                 <AuthRoute exact path="/tasks/add" component={AddTask} />
+                <AuthRoute exact path="/clients" component={Clients} />
+                <AuthRoute exact path="/clients/add" component={AddClient} />
                 <PublicRoute exact path="/login" component={Login} />
                 <PublicRoute exact path="/register" component={Register} />
                 <Route exact path="/reset-password" component={ResetPassword} />

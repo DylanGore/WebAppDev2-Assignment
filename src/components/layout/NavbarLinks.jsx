@@ -11,6 +11,12 @@ const PublicLinks = () => {
             <Nav.Link as={Link} to="/projects">
                 Projects
             </Nav.Link>
+            <Nav.Link as={Link} to="/tasks">
+                Tasks
+            </Nav.Link>
+            <Nav.Link as={Link} to="/clients">
+                Clients
+            </Nav.Link>
         </Fragment>
     );
 };

@@ -24,7 +24,7 @@ const AddTask = () => {
             .catch(err => {
                 console.log(err.message);
             });
-    });
+    }, []);
 
     const handleChange = e => {
         setTask({
@@ -83,7 +83,7 @@ const AddTask = () => {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="project">
                             <Form.Label>Project:</Form.Label>
-                            <Form.Control as="select" onChange={handleChange}>
+                            <Form.Control as="select" onChange={handleChange} required>
                                 {projects &&
                                     projects.map(project => {
                                         return <option value={project.id}>{project.title}</option>;
@@ -92,7 +92,7 @@ const AddTask = () => {
                         </Form.Group>
                         <Form.Group controlId="description">
                             <Form.Label>Description:</Form.Label>
-                            <Form.Control as="textarea" rows="3" onChange={handleChange} />
+                            <Form.Control as="textarea" rows="3" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Due:</Form.Label>
@@ -102,7 +102,7 @@ const AddTask = () => {
                                 value={task.due}
                                 onChange={timestamp => setTask({ ...task, due: timestamp })}
                                 calendarIcon={<Icon path={mdiCalendar} size={1} />}
-                                clearIcon={<Icon path={mdiClose} size={1} showLeadingZeros={true} />}
+                                clearIcon={<Icon path={mdiClose} size={1} required />}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">
