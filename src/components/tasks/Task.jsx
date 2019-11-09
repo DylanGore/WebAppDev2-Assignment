@@ -8,13 +8,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import TaskList from '../tasks/TaskList';
 import Loading from '../layout/Loading';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
-const Project = props => {
-    const [project, setProject] = useState({});
+const Task = props => {
+    const [task, setTask] = useState({});
     const [loading, setLoading] = useState(true);
     const [modalShow, setModalShow] = useState(false);
 
@@ -24,9 +23,9 @@ const Project = props => {
             var id = props.match.params.id.toString();
             // Use axios to request the project info, redirect to 404 if there is an error
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id)
+                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + id)
                 .then(res => {
-                    setProject(res.data);
+                    setTask(res.data);
                 })
                 .catch(() => {
                     history.push('/404');
@@ -37,10 +36,8 @@ const Project = props => {
 
     // Use props for project info if they exist (used mainly for Storybook support)
     useEffect(() => {
-        setProject({
+        setTask({
             id: 0,
-            title: props.title,
-            type: props.type,
             description: props.description,
             due: props.due
         });
@@ -53,42 +50,27 @@ const Project = props => {
                 <Row>
                     <Col>
                         <h1>
-                            {project.title} <small>(ID: {project.id})</small>
+                            Task <small>(ID: {task.id})</small>
                         </h1>
-                        <h2>
-                            <small className="text-muted">{project.type}</small>
-                        </h2>
-                        <p className="lead">{project.description}</p>
+                        <p className="lead">{task.description}</p>
                         <p>
-                            <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
+                            <strong>Due:</strong> <Moment format="LLLL">{task.due}</Moment>
                         </p>
 
-                        <hr />
-
-                        <h3>Tasks</h3>
-                        {project.id !== 0 && <TaskList project_id={[project.id]} />}
-
-                        <hr />
-
                         <ButtonGroup aria-label="Task Options">
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                as={Link}
-                                to={'/projects/edit/' + props.match.params.id}
-                            >
-                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
+                            <Button variant="secondary" size="sm" as={Link} to={'/tasks/edit/' + props.match.params.id}>
+                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Task
                             </Button>
                             <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
-                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Project
+                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Task
                             </Button>
                         </ButtonGroup>
 
                         <DeleteModal
                             show={modalShow}
                             onHide={() => setModalShow(!modalShow)}
-                            type="projects"
-                            id={project.id}
+                            type="tasks"
+                            id={task.id}
                         />
                     </Col>
                 </Row>
@@ -99,4 +81,4 @@ const Project = props => {
     }
 };
 
-export default withRouter(Project);
+export default withRouter(Task);

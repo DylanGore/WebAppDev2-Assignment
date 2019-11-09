@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -61,6 +62,9 @@ const TaskList = ({ project_id, limit }) => {
                                 variant={getTaskColor(task)}
                             >
                                 {task.description}
+                                <span className="float-right">
+                                    <Link to={'/tasks/' + task.id}>View</Link>
+                                </span>
                             </ListGroup.Item>
                         );
                     })}

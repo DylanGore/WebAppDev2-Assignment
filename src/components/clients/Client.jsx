@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
-import Moment from 'react-moment';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import TaskList from '../tasks/TaskList';
 import Loading from '../layout/Loading';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
-const Project = props => {
-    const [project, setProject] = useState({});
+const Client = props => {
+    const [client, setClient] = useState({});
     const [loading, setLoading] = useState(true);
     const [modalShow, setModalShow] = useState(false);
 
@@ -24,9 +22,9 @@ const Project = props => {
             var id = props.match.params.id.toString();
             // Use axios to request the project info, redirect to 404 if there is an error
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id)
+                .get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id)
                 .then(res => {
-                    setProject(res.data);
+                    setClient(res.data);
                 })
                 .catch(() => {
                     history.push('/404');
@@ -37,12 +35,11 @@ const Project = props => {
 
     // Use props for project info if they exist (used mainly for Storybook support)
     useEffect(() => {
-        setProject({
+        setClient({
             id: 0,
-            title: props.title,
-            type: props.type,
-            description: props.description,
-            due: props.due
+            name: props.name,
+            phone: props.phone,
+            email: props.email
         });
         setLoading(false);
     }, [props]);
@@ -52,43 +49,38 @@ const Project = props => {
             <Container fluid>
                 <Row>
                     <Col>
-                        <h1>
-                            {project.title} <small>(ID: {project.id})</small>
-                        </h1>
-                        <h2>
-                            <small className="text-muted">{project.type}</small>
-                        </h2>
-                        <p className="lead">{project.description}</p>
-                        <p>
-                            <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
-                        </p>
+                        <h1>Client: {client.name}</h1>
+                        <ul>
+                            <li>
+                                <strong>ID:</strong> {client.id}
+                            </li>
+                            <li>
+                                <strong>E-Mail:</strong> {client.email}
+                            </li>
+                            <li>
+                                <strong>Phone:</strong> {client.phone}
+                            </li>
+                        </ul>
 
-                        <hr />
-
-                        <h3>Tasks</h3>
-                        {project.id !== 0 && <TaskList project_id={[project.id]} />}
-
-                        <hr />
-
-                        <ButtonGroup aria-label="Task Options">
+                        <ButtonGroup aria-label="Client Options">
                             <Button
                                 variant="secondary"
                                 size="sm"
                                 as={Link}
-                                to={'/projects/edit/' + props.match.params.id}
+                                to={'/clients/edit/' + props.match.params.id}
                             >
-                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
+                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Client
                             </Button>
                             <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
-                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Project
+                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Client
                             </Button>
                         </ButtonGroup>
 
                         <DeleteModal
                             show={modalShow}
                             onHide={() => setModalShow(!modalShow)}
-                            type="projects"
-                            id={project.id}
+                            type="clients"
+                            id={client.id}
                         />
                     </Col>
                 </Row>
@@ -99,4 +91,4 @@ const Project = props => {
     }
 };
 
-export default withRouter(Project);
+export default withRouter(Client);
