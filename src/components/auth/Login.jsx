@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const [message, setMessage] = useState({});
+    const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
 
     const DisplayMessage = () => {
@@ -78,6 +78,9 @@ const Login = () => {
                             <Form.Control type="password" placeholder="Password" onChange={handleChange} required />
                         </Form.Group>
 
+                        <p className="text-muted">
+                            <Link to="/reset-password">Forgot Password?</Link>
+                        </p>
                         <p className="text-muted">
                             Haven't got an account yet? Click <Link to="/register">here</Link> to register.
                         </p>

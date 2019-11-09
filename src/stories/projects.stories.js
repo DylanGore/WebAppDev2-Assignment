@@ -23,7 +23,7 @@ stories.add('Project', () => {
         'Description',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus facilisis nulla felis, quis cursus felis pharetra ut. Quisque accumsan turpis et blandit pharetra.'
     );
-    const due = text('Due', '1st December 2019');
+    const due = text('Due', '2019-11-01T23:59:00.000Z');
     return <Project title={title} type={type} description={description} due={due} />;
 });
 stories.add('SimpleProject', () => {

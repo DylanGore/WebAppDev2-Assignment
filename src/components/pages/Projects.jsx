@@ -1,23 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import Icon from '@mdi/react';
+import { mdiFolderPlus } from '@mdi/js';
 import ProjectList from '../projects/ProjectList';
-class Projects extends Component {
-    render() {
-        return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h1>Projects</h1>
-                        <Link to="/projects/add">Add Project</Link>
-                        <ProjectList projects={this.props.projects} />
-                    </Col>
-                </Row>
-            </Container>
-        );
-    }
-}
+const Projects = props => {
+    return (
+        <Container fluid>
+            <Row>
+                <Col>
+                    <h1>Projects</h1>
+                    <Button variant="primary" size="sm" as={Link} to="/projects/add/" className="my-2">
+                        <Icon path={mdiFolderPlus} size={0.8} color="white" /> Add Project
+                    </Button>
+                    <ProjectList projects={props.projects} />
+                </Col>
+            </Row>
+        </Container>
+    );
+};
 
 export default Projects;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text, number } from '@storybook/addon-knobs';
+import { withKnobs, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 import AddEditClient from '../components/clients/AddEditClient';
 import ClientList from '../components/clients/ClientList';

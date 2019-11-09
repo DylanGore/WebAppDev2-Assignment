@@ -27,11 +27,11 @@ const Project = props => {
                 .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id)
                 .then(res => {
                     setProject(res.data);
+                    setLoading(false);
                 })
                 .catch(() => {
                     history.push('/404');
                 });
-            setLoading(false);
         }
     }, [props.match.params.id]);
 
@@ -66,17 +66,12 @@ const Project = props => {
                         <hr />
 
                         <h3>Tasks</h3>
-                        {project.id !== 0 && <TaskList project_id={[project.id]} />}
+                        {project.id !== 0 ? <TaskList project_id={[project.id]} /> : <p className="lead">No tasks.</p>}
 
                         <hr />
 
-                        <ButtonGroup aria-label="Task Options">
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                as={Link}
-                                to={'/projects/edit/' + props.match.params.id}
-                            >
+                        <ButtonGroup aria-label="Project Options">
+                            <Button variant="info" size="sm" as={Link} to={'/projects/edit/' + props.match.params.id}>
                                 <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
                             </Button>
                             <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>

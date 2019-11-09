@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SimpleProject from './SimpleProject';
+import Loading from '../layout/Loading';
 
 const ProjectList = ({ limit }) => {
     const [projects, setProjects] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Use axios to request the list of all projects
     useEffect(() => {
@@ -18,21 +20,26 @@ const ProjectList = ({ limit }) => {
             .get(url)
             .then(res => {
                 setProjects(res.data);
+                setLoading(false);
             })
             .catch(err => {
                 console.log(err.message);
             });
     }, [limit]);
 
-    return (
-        <div className="projectList">
-            {projects &&
-                projects.map(project => {
-                    return <SimpleProject project={project} key={project.id} />;
-                })}
-            {!projects && <p className="Lead">No projects available.</p>}
-        </div>
-    );
+    if (!loading) {
+        return (
+            <div className="projectList">
+                {projects &&
+                    projects.map(project => {
+                        return <SimpleProject project={project} key={project.id} />;
+                    })}
+                {!projects && <p className="Lead">No projects available.</p>}
+            </div>
+        );
+    } else {
+        return <Loading />;
+    }
 };
 
 export default ProjectList;

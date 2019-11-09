@@ -2,9 +2,11 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Loading from '../layout/Loading';
 
 const TaskList = ({ project_id, limit }) => {
     const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (project_id) {
@@ -12,6 +14,7 @@ const TaskList = ({ project_id, limit }) => {
                 .get(process.env.REACT_APP_BACKEND_LOC + 'tasks?project=' + project_id)
                 .then(res => {
                     setTasks(res.data);
+                    setLoading(false);
                 })
                 .catch(err => {
                     console.log(err.message);
@@ -28,6 +31,7 @@ const TaskList = ({ project_id, limit }) => {
                 .get(url)
                 .then(res => {
                     setTasks(res.data);
+                    setLoading(false);
                 })
                 .catch(err => {
                     console.log(err.message);
@@ -50,28 +54,32 @@ const TaskList = ({ project_id, limit }) => {
         }
     };
 
-    return (
-        <Fragment>
-            <ListGroup>
-                {tasks.length > 0 &&
-                    tasks.map(task => {
-                        return (
-                            <ListGroup.Item
-                                key={task.id}
-                                disabled={task.state === 'complete'}
-                                variant={getTaskColor(task)}
-                            >
-                                {task.description}
-                                <span className="float-right">
-                                    <Link to={'/tasks/' + task.id}>View</Link>
-                                </span>
-                            </ListGroup.Item>
-                        );
-                    })}
-                {tasks.length === 0 && <p className="Lead">No tasks available.</p>}
-            </ListGroup>
-        </Fragment>
-    );
+    if (!loading) {
+        return (
+            <Fragment>
+                <ListGroup>
+                    {tasks.length > 0 &&
+                        tasks.map(task => {
+                            return (
+                                <ListGroup.Item
+                                    key={task.id}
+                                    disabled={task.state === 'complete'}
+                                    variant={getTaskColor(task)}
+                                >
+                                    {task.description}
+                                    <span className="float-right">
+                                        <Link to={'/tasks/' + task.id}>View</Link>
+                                    </span>
+                                </ListGroup.Item>
+                            );
+                        })}
+                    {tasks.length === 0 && <p className="Lead">No tasks available.</p>}
+                </ListGroup>
+            </Fragment>
+        );
+    } else {
+        return <Loading />;
+    }
 };
 
 export default TaskList;

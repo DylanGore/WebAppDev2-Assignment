@@ -17,7 +17,7 @@ const Register = props => {
         password: '',
         passwordConfirm: ''
     });
-    const [message, setMessage] = useState({});
+    const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
 
     const DisplayMessage = () => {

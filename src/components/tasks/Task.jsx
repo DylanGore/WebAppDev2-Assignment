@@ -26,11 +26,11 @@ const Task = props => {
                 .get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + id)
                 .then(res => {
                     setTask(res.data);
+                    setLoading(false);
                 })
                 .catch(() => {
                     history.push('/404');
                 });
-            setLoading(false);
         }
     }, [props.match.params.id]);
 
@@ -58,7 +58,7 @@ const Task = props => {
                         </p>
 
                         <ButtonGroup aria-label="Task Options">
-                            <Button variant="secondary" size="sm" as={Link} to={'/tasks/edit/' + props.match.params.id}>
+                            <Button variant="info" size="sm" as={Link} to={'/tasks/edit/' + props.match.params.id}>
                                 <Icon path={mdiPencil} size={0.8} color="white" /> Edit Task
                             </Button>
                             <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>

@@ -1,8 +1,7 @@
 {
-  "projects": [
-    {
+  "projects": [{
       "title": "Project 1",
-      "type": "Example",
+      "type": "Website",
       "client": 1,
       "description": "Project description",
       "due": "2019-11-01T23:59:00.000Z",
@@ -10,7 +9,7 @@
     },
     {
       "title": "Project 2",
-      "type": "Example",
+      "type": "Personal Project",
       "client": 1,
       "description": "Project description",
       "due": "2019-11-01T23:59:00.000Z",
@@ -18,7 +17,7 @@
     },
     {
       "title": "Project 3",
-      "type": "Example",
+      "type": "Website",
       "client": 2,
       "description": "Project description",
       "due": "2019-11-01T23:35:00.000Z",
@@ -49,8 +48,7 @@
       "id": 6
     }
   ],
-  "tasks": [
-    {
+  "tasks": [{
       "project": 1,
       "description": "Example Task 1",
       "due": "2019-12-01T23:59:00.000Z",
@@ -93,8 +91,7 @@
       "id": 6
     }
   ],
-  "clients": [
-    {
+  "clients": [{
       "name": "Client 1",
       "email": "client1@example.com",
       "phone": "+3530800000000",

@@ -25,11 +25,11 @@ const Client = props => {
                 .get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id)
                 .then(res => {
                     setClient(res.data);
+                    setLoading(false);
                 })
                 .catch(() => {
                     history.push('/404');
                 });
-            setLoading(false);
         }
     }, [props.match.params.id]);
 
@@ -58,17 +58,12 @@ const Client = props => {
                                 <strong>E-Mail:</strong> {client.email}
                             </li>
                             <li>
-                                <strong>Phone:</strong> {client.phone}
+                                <strong>Phone:</strong> {client.phone ? client.phone : 'No Phone'}
                             </li>
                         </ul>
 
                         <ButtonGroup aria-label="Client Options">
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                as={Link}
-                                to={'/clients/edit/' + props.match.params.id}
-                            >
+                            <Button variant="info" size="sm" as={Link} to={'/clients/edit/' + props.match.params.id}>
                                 <Icon path={mdiPencil} size={0.8} color="white" /> Edit Client
                             </Button>
                             <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>

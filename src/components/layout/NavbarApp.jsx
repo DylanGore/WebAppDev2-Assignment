@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Icon from '@mdi/react';
-import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant, mdiAccount } from '@mdi/js';
+import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant } from '@mdi/js';
 // Navbar Links
 import NavbarLinks from './NavbarLinks';
 
@@ -35,7 +35,8 @@ const NavbarApp = () => {
                 <Fragment>
                     {user.photoURL && (
                         <Navbar.Text>
-                            <img className="avatar" src={user.photoURL} alt="avatar" /> {user.displayName}
+                            <img className="avatar" src={user.photoURL} alt="avatar" />
+                            &nbsp;<span>{user.displayName}</span>
                         </Navbar.Text>
                     )}
 

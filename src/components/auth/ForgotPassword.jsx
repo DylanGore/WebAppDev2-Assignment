@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import firebase from '../../config/firebase';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -6,10 +7,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Icon from '@mdi/react';
+import { mdiArrowLeft } from '@mdi/js';
 
 const ForgotPassword = () => {
     const [formData, setFormData] = useState({ email: '' });
-    const [message, setMessage] = useState({});
+    const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
 
     const DisplayMessage = () => {
@@ -76,6 +79,10 @@ const ForgotPassword = () => {
                             Reset Password
                         </Button>
                     </Form>
+                    <Button as={Link} size="sm" to="/Login" variant="secondary" className="mt-3">
+                        <Icon path={mdiArrowLeft} size={1} color="white" />
+                        Return to login
+                    </Button>
                 </Col>
             </Row>
         </Container>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text, number } from '@storybook/addon-knobs';
+import { withKnobs, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 import TaskList from '../components/tasks/TaskList';
 import AddEditTask from '../components/tasks/AddEditTask';
