@@ -15,6 +15,7 @@ const AddEditClient = props => {
     const [client, setClient] = useState({ name: '', email: '', phone: '' });
     const [clientId, setClientId] = useState(null);
     const [message, setMessage] = useState(null);
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         if (props.match.params.id) {
@@ -43,30 +44,32 @@ const AddEditClient = props => {
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.currentTarget;
-
-        if (clientId) {
-            // Edit Client
-            axios
-                .put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Client Edit Successful!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
+        if (form.checkValidity() === true) {
+            setValidated(true);
+            if (clientId) {
+                // Edit Client
+                axios
+                    .put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Client Edit Successful!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            } else {
+                // Add Client
+                axios
+                    .post(process.env.REACT_APP_BACKEND_LOC + 'clients', client)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Client Added!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            }
         } else {
-            // Add Client
-            axios
-                .post(process.env.REACT_APP_BACKEND_LOC + 'clients', client)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Client Added!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
+            setMessage({ value: 'Invalid Form!', type: 'danger' });
         }
-
-        form.reset();
     };
 
     const DisplayMessage = () => {
@@ -91,7 +94,7 @@ const AddEditClient = props => {
             <Row className="justify-content-center">
                 <Col md={6} sm={12}>
                     <DisplayMessage />
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} validated={validated}>
                         <Form.Group controlId="name">
                             <Form.Label>Name:</Form.Label>
                             <Form.Control type="text" onChange={handleChange} value={client.name} required />
@@ -102,7 +105,7 @@ const AddEditClient = props => {
                         </Form.Group>
                         <Form.Group controlId="phone">
                             <Form.Label>Phone Number:</Form.Label>
-                            <Form.Control type="phone" onChange={handleChange} value={client.phone} required />
+                            <Form.Control type="phone" onChange={handleChange} value={client.phone} />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             <Icon path={pageInfo.icon} size={1} color="white" />

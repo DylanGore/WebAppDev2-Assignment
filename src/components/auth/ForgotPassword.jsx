@@ -8,17 +8,17 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
 const ForgotPassword = () => {
-    const [formData, setFormData] = useState({
-        email: ''
-    });
+    const [formData, setFormData] = useState({ email: '' });
+    const [message, setMessage] = useState({});
+    const [validated, setValidated] = useState(false);
 
     const DisplayMessage = () => {
-        if (!formData.message) {
+        if (!message) {
             return null;
         } else {
             return (
-                <Alert variant={formData.msgType} onClose={() => setFormData({ ...formData, message: '' })} dismissible>
-                    {formData.message}
+                <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>
+                    {message.value}
                 </Alert>
             );
         }
@@ -33,15 +33,22 @@ const ForgotPassword = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        firebase
-            .auth()
-            .sendPasswordResetEmail(formData.email)
-            .then(() => {
-                setFormData({ ...formData, message: 'Password reset request sent!', msgType: 'success' });
-            })
-            .catch(err => {
-                setFormData({ ...formData, message: err.message, msgType: 'danger' });
-            });
+        const form = e.currentTarget;
+        if (form.checkValidity() === true) {
+            setValidated(true);
+            firebase
+                .auth()
+                .sendPasswordResetEmail(formData.email)
+                .then(() => {
+                    setMessage({
+                        value: 'Password reset request sent, please check your email inbox!',
+                        type: 'success'
+                    });
+                })
+                .catch(err => {
+                    setMessage({ value: err.message, type: 'danger' });
+                });
+        }
     };
 
     return (
@@ -54,10 +61,15 @@ const ForgotPassword = () => {
             <Row className="justify-content-center">
                 <Col md={6} sm={12}>
                     <DisplayMessage />
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} validated={validated}>
                         <Form.Group controlId="email">
                             <Form.Label>E-mail address:</Form.Label>
-                            <Form.Control type="email" placeholder="example@example.com" onChange={handleChange} />
+                            <Form.Control
+                                type="email"
+                                placeholder="example@example.com"
+                                onChange={handleChange}
+                                required
+                            />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">

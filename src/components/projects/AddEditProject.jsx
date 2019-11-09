@@ -17,6 +17,7 @@ const AddEditProject = props => {
     const [projectId, setProjectId] = useState(null);
     const [clients, setClients] = useState(null);
     const [message, setMessage] = useState(null);
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         axios
@@ -60,30 +61,35 @@ const AddEditProject = props => {
             return;
         }
 
-        if (projectId) {
-            // Edit Project
-            axios
-                .put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + projectId, project)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Project Edit Successful!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
-        } else {
-            // Add Project
-            axios
-                .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Project Added!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
-        }
-        console.log(project);
+        if (form.checkValidity() === true) {
+            setValidated(true);
 
-        form.reset();
+            if (projectId) {
+                // Edit Project
+                axios
+                    .put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + projectId, project)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Project Edit Successful!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            } else {
+                // Add Project
+                axios
+                    .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Project Added!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            }
+
+            form.reset();
+        } else {
+            setMessage({ value: 'Invalid Form!', type: 'danger' });
+        }
     };
 
     const DisplayMessage = () => {
@@ -108,7 +114,7 @@ const AddEditProject = props => {
             <Row className="justify-content-center">
                 <Col md={6} sm={12}>
                     <DisplayMessage />
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} validated={validated}>
                         <Form.Group controlId="title">
                             <Form.Label>Project Title:</Form.Label>
                             <Form.Control type="text" onChange={handleChange} value={project.title} required />

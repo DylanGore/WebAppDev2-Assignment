@@ -17,6 +17,7 @@ const AddEditTask = props => {
     const [task, setTask] = useState({});
     const [taskId, setTaskId] = useState(null);
     const [message, setMessage] = useState(null);
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         axios
@@ -61,29 +62,34 @@ const AddEditTask = props => {
             return;
         }
 
-        if (taskId) {
-            // Edit Task
-            axios
-                .put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Task Edit Successful!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
-        } else {
-            // Add Task
-            axios
-                .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
-                .then(res => {
-                    setMessage({ type: 'success', value: 'Task Added!' });
-                })
-                .catch(err => {
-                    setMessage({ type: 'danger', value: err.message });
-                });
-        }
+        if (form.checkValidity() === true) {
+            setValidated(true);
 
-        form.reset();
+            if (taskId) {
+                // Edit Task
+                axios
+                    .put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Task Edit Successful!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            } else {
+                // Add Task
+                axios
+                    .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
+                    .then(res => {
+                        setMessage({ type: 'success', value: 'Task Added!' });
+                    })
+                    .catch(err => {
+                        setMessage({ type: 'danger', value: err.message });
+                    });
+            }
+
+            form.reset();
+            setTask({});
+        }
     };
 
     const DisplayMessage = () => {
@@ -108,7 +114,7 @@ const AddEditTask = props => {
             <Row className="justify-content-center">
                 <Col md={6} sm={12}>
                     <DisplayMessage />
-                    <Form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} validated={validated}>
                         <Form.Group controlId="project">
                             <Form.Label>Project:</Form.Label>
                             <Form.Control as="select" onChange={handleChange} value={task.project} required>
