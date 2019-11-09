@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../../config/history';
 import firebase from '../../config/firebase';
@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Icon from '@mdi/react';
-import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant } from '@mdi/js';
+import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant, mdiAccount } from '@mdi/js';
 // Navbar Links
 import NavbarLinks from './NavbarLinks';
 
@@ -32,9 +32,17 @@ const NavbarApp = () => {
     const DisplayUserLinks = () => {
         if (user) {
             return (
-                <Nav.Link onClick={logout}>
-                    <Icon path={mdiLogoutVariant} size={1} color="white" /> Log out
-                </Nav.Link>
+                <Fragment>
+                    {user.photoURL && (
+                        <Navbar.Text>
+                            <img className="avatar" src={user.photoURL} alt="avatar" /> {user.displayName}
+                        </Navbar.Text>
+                    )}
+
+                    <Nav.Link onClick={logout}>
+                        <Icon path={mdiLogoutVariant} size={1} color="white" /> Log out
+                    </Nav.Link>
+                </Fragment>
             );
         } else {
             return (

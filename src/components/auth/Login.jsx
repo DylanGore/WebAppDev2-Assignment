@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import history from '../../config/history';
 import firebase from '../../config/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,8 +9,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 const Login = () => {
-    const [user] = useAuthState(firebase.auth());
-
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [message, setMessage] = useState({});
     const [validated, setValidated] = useState(false);

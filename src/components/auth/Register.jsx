@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import gravatar from 'gravatar';
 
 const Register = props => {
     const [formData, setFormData] = useState({
@@ -58,16 +59,20 @@ const Register = props => {
                 .then(cred => {
                     setMessage({ value: 'User created successfully!', type: 'success' });
                     console.log('User created successfully!', formData.email);
+                    let avatarUrl = gravatar.url(formData.email, { size: 24, default: 'mp' }, true);
                     cred.user
                         .updateProfile({
-                            displayName: formData.firstName + ' ' + formData.lastName
-                            // photoURL: "https://example.com/profile.jpg"
+                            displayName: formData.firstName + ' ' + formData.lastName,
+                            photoURL: avatarUrl
+                        })
+                        .then(() => {
+                            // Required to update user state after adding name and avatar
+                            window.location.reload();
+                            props.history.push('/dashboard');
                         })
                         .catch(function(error) {
                             console.log('Error updating profile!');
                         });
-
-                    props.history.push('/dashboard');
                 })
                 .catch(err => {
                     setMessage({ value: err.message, type: 'danger' });

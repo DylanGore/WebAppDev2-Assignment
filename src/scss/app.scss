@@ -28,6 +28,10 @@ $enable-rounded: false;
     padding: 2em;
 }
 
+.avatar {
+    border-radius: 100%;
+}
+
 .react-datetime-picker__wrapper {
     border: none;
     padding: 0;
