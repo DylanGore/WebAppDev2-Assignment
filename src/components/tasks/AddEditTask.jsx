@@ -73,19 +73,10 @@ const AddEditTask = props => {
                 });
         } else {
             // Add Task
-            // Use axios to request the list of tasks to set the ID
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks')
+                .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
                 .then(res => {
-                    var newId = res.data.length + 1;
-                    axios
-                        .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
-                        .then(res => {
-                            setMessage({ type: 'success', value: 'Task Added! (ID: ' + newId + ')' });
-                        })
-                        .catch(err => {
-                            setMessage({ type: 'danger', value: err.message });
-                        });
+                    setMessage({ type: 'success', value: 'Task Added!' });
                 })
                 .catch(err => {
                     setMessage({ type: 'danger', value: err.message });

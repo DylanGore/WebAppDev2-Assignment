@@ -34,7 +34,6 @@ const AddEditProject = props => {
             axios
                 .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.match.params.id)
                 .then(res => {
-                    // console.log(res.data);
                     setPageInfo({ title: 'Edit Project: ' + res.data.title, button: 'Edit Project', icon: mdiPencil });
                     setProject({ ...res.data, due: null });
                 })
@@ -73,19 +72,10 @@ const AddEditProject = props => {
                 });
         } else {
             // Add Project
-            // Use axios to request the list of projects to set the ID
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
+                .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
                 .then(res => {
-                    var newId = res.data.length + 1;
-                    axios
-                        .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
-                        .then(res => {
-                            setMessage({ type: 'success', value: 'Project Added! (ID: ' + newId + ')' });
-                        })
-                        .catch(err => {
-                            setMessage({ type: 'danger', value: err.message });
-                        });
+                    setMessage({ type: 'success', value: 'Project Added!' });
                 })
                 .catch(err => {
                     setMessage({ type: 'danger', value: err.message });

@@ -6,15 +6,15 @@ import StoryRouter from 'storybook-react-router';
 import Project from '../components/projects/Project';
 import SimpleProject from '../components/projects/SimpleProject';
 import ProjectList from '../components/projects/ProjectList';
-import AddProject from '../components/projects/AddProject';
+import AddEditProject from '../components/projects/AddEditProject';
 
 const stories = storiesOf('Projects', module);
 
 stories.addDecorator(StoryRouter());
 stories.addDecorator(withKnobs);
 
-stories.add('Add Project', () => {
-    return <AddProject />;
+stories.add('Add/Edit Project', () => {
+    return <AddEditProject />;
 });
 stories.add('Project', () => {
     const title = text('Title', 'Sample Project');

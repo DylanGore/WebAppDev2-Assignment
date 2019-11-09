@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs, text, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 import TaskList from '../components/tasks/TaskList';
-import AddTask from '../components/tasks/AddTask';
+import AddEditTask from '../components/tasks/AddEditTask';
 // My Components
 
 const stories = storiesOf('Tasks', module);
@@ -11,8 +11,8 @@ const stories = storiesOf('Tasks', module);
 stories.addDecorator(StoryRouter());
 stories.addDecorator(withKnobs);
 
-stories.add('Add Task', () => {
-    return <AddTask />;
+stories.add('Add/Edit Task', () => {
+    return <AddEditTask />;
 });
 stories.add('Task List', () => {
     const project = number('Project ID', 1);

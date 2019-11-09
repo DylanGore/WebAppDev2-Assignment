@@ -56,19 +56,10 @@ const AddEditClient = props => {
                 });
         } else {
             // Add Client
-            // Use axios to request the list of tasks to set the ID
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'clients')
+                .post(process.env.REACT_APP_BACKEND_LOC + 'clients', client)
                 .then(res => {
-                    var newId = res.data.length + 1;
-                    axios
-                        .post(process.env.REACT_APP_BACKEND_LOC + 'clients', client)
-                        .then(res => {
-                            setMessage({ type: 'success', value: 'Client Added! (ID: ' + newId + ')' });
-                        })
-                        .catch(err => {
-                            setMessage({ type: 'danger', value: err.message });
-                        });
+                    setMessage({ type: 'success', value: 'Client Added!' });
                 })
                 .catch(err => {
                     setMessage({ type: 'danger', value: err.message });
