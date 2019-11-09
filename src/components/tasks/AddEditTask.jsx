@@ -11,32 +11,33 @@ import { mdiCalendar, mdiClose, mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js
 import axios from 'axios';
 import Icon from '@mdi/react';
 
-const AddEditProject = props => {
-    const [project, setProject] = useState({ title: '' });
-    const [pageInfo, setPageInfo] = useState({ title: 'Add a new Project', button: 'Add Project', icon: mdiPlus });
-    const [projectId, setProjectId] = useState(null);
-    const [clients, setClients] = useState(null);
+const AddEditTask = props => {
+    const [projects, setProjects] = useState(null);
+    const [pageInfo, setPageInfo] = useState({ title: 'Add a new Task', button: 'Add Task', icon: mdiPlus });
+    const [task, setTask] = useState({});
+    const [taskId, setTaskId] = useState(null);
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
         axios
-            .get(process.env.REACT_APP_BACKEND_LOC + 'clients')
+            .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
             .then(res => {
-                setClients(res.data);
+                setProjects(res.data);
             })
             .catch(err => {
                 console.log(err.message);
             });
 
+        // Edit Mode
         if (props.match.params.id) {
-            setProjectId(props.match.params.id);
+            setTaskId(props.match.params.id);
             console.log('Edit Mode');
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.match.params.id)
+                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + props.match.params.id)
                 .then(res => {
                     // console.log(res.data);
-                    setPageInfo({ title: 'Edit Project: ' + res.data.title, button: 'Edit Project', icon: mdiPencil });
-                    setProject({ ...res.data, due: null });
+                    setPageInfo({ title: 'Edit Task: ' + res.data.id, button: 'Edit Task', icon: mdiPencil });
+                    setTask({ ...res.data, due: null });
                 })
                 .catch(err => {
                     console.log(err.message);
@@ -45,8 +46,8 @@ const AddEditProject = props => {
     }, [props.match.params.id]);
 
     const handleChange = e => {
-        setProject({
-            ...project,
+        setTask({
+            ...task,
             [e.target.id]: e.target.value
         });
     };
@@ -54,34 +55,33 @@ const AddEditProject = props => {
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.currentTarget;
-        console.log(project);
 
-        if (project.due === null) {
+        if (task.due === null) {
             setMessage({ type: 'danger', value: 'Please enter a valid date!' });
             return;
         }
 
-        if (projectId) {
-            // Edit Project
+        if (taskId) {
+            // Edit Task
             axios
-                .put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + projectId, project)
+                .put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task)
                 .then(res => {
-                    setMessage({ type: 'success', value: 'Project Edit Successful!' });
+                    setMessage({ type: 'success', value: 'Task Edit Successful!' });
                 })
                 .catch(err => {
                     setMessage({ type: 'danger', value: err.message });
                 });
         } else {
-            // Add Project
-            // Use axios to request the list of projects to set the ID
+            // Add Task
+            // Use axios to request the list of tasks to set the ID
             axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
+                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks')
                 .then(res => {
                     var newId = res.data.length + 1;
                     axios
-                        .post(process.env.REACT_APP_BACKEND_LOC + 'projects', project)
+                        .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
                         .then(res => {
-                            setMessage({ type: 'success', value: 'Project Added! (ID: ' + newId + ')' });
+                            setMessage({ type: 'success', value: 'Task Added! (ID: ' + newId + ')' });
                         })
                         .catch(err => {
                             setMessage({ type: 'danger', value: err.message });
@@ -91,7 +91,6 @@ const AddEditProject = props => {
                     setMessage({ type: 'danger', value: err.message });
                 });
         }
-        console.log(project);
 
         form.reset();
     };
@@ -119,26 +118,14 @@ const AddEditProject = props => {
                 <Col md={6} sm={12}>
                     <DisplayMessage />
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="title">
-                            <Form.Label>Project Title:</Form.Label>
-                            <Form.Control type="text" onChange={handleChange} value={project.title} required />
-                        </Form.Group>
-                        <Form.Group controlId="type">
-                            <Form.Label>Type:</Form.Label>
-                            <Form.Control as="select" onChange={handleChange} value={project.type} required>
-                                <option>Website</option>
-                                <option>College Assignment</option>
-                                <option>Personal Project</option>
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group controlId="client">
-                            <Form.Label>Client:</Form.Label>
-                            <Form.Control as="select" onChange={handleChange} value={project.client} required>
-                                {clients &&
-                                    clients.map(client => {
+                        <Form.Group controlId="project">
+                            <Form.Label>Project:</Form.Label>
+                            <Form.Control as="select" onChange={handleChange} value={task.project} required>
+                                {projects &&
+                                    projects.map(project => {
                                         return (
-                                            <option value={parseInt(client.id)} key={client.id}>
-                                                {client.name}
+                                            <option value={project.id} key={project.id}>
+                                                {project.title}
                                             </option>
                                         );
                                     })}
@@ -150,7 +137,7 @@ const AddEditProject = props => {
                                 as="textarea"
                                 rows="3"
                                 onChange={handleChange}
-                                value={project.description}
+                                value={task.description}
                                 required
                             />
                         </Form.Group>
@@ -159,20 +146,21 @@ const AddEditProject = props => {
                             <Form.Control
                                 as={DateTimePicker}
                                 className="dateTime"
-                                value={project.due}
-                                onChange={timestamp => setProject({ ...project, due: timestamp })}
+                                value={task.due}
+                                onChange={timestamp => setTask({ ...task, due: timestamp })}
                                 calendarIcon={<Icon path={mdiCalendar} size={1} />}
                                 clearIcon={<Icon path={mdiClose} size={1} required />}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">
-                            <Icon path={pageInfo.icon} size={1} color="white" /> {pageInfo.button}
+                            <Icon path={pageInfo.icon} size={1} color="white" />
+                            {pageInfo.button}
                         </Button>
                     </Form>
                     <br />
-                    {projectId && (
-                        <Button as={Link} to={'/projects/' + projectId} size="sm" variant="secondary">
-                            <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to project
+                    {taskId && (
+                        <Button as={Link} to={'/tasks/' + taskId} size="sm" variant="secondary">
+                            <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to task
                         </Button>
                     )}
                 </Col>
@@ -181,4 +169,4 @@ const AddEditProject = props => {
     );
 };
 
-export default withRouter(AddEditProject);
+export default withRouter(AddEditTask);

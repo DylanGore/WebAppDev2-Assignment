@@ -20,8 +20,8 @@ import AddEditProject from '../projects/AddEditProject';
 import NotFound from '../error/NotFound';
 import Home from '../pages/Home';
 import ResetPassword from '../auth/ForgotPassword';
-import AddTask from '../tasks/AddTask';
-import AddClient from '../clients/AddClient';
+import AddEditTask from '../tasks/AddEditTask';
+import AddEditClient from '../clients/AddEditClient';
 
 function RouterApp() {
     return (
@@ -34,9 +34,11 @@ function RouterApp() {
                 <AuthRoute exact path="/projects/add" component={AddEditProject} />
                 <AuthRoute exact path="/projects/edit/:id" component={AddEditProject} />
                 <AuthRoute exact path="/tasks" component={Tasks} />
-                <AuthRoute exact path="/tasks/add" component={AddTask} />
+                <AuthRoute exact path="/tasks/add" component={AddEditTask} />
+                <AuthRoute exact path="/tasks/edit/:id" component={AddEditTask} />
                 <AuthRoute exact path="/clients" component={Clients} />
-                <AuthRoute exact path="/clients/add" component={AddClient} />
+                <AuthRoute exact path="/clients/add" component={AddEditClient} />
+                <AuthRoute exact path="/clients/edit/:id" component={AddEditClient} />
                 <PublicRoute exact path="/login" component={Login} />
                 <PublicRoute exact path="/register" component={Register} />
                 <Route exact path="/reset-password" component={ResetPassword} />
