@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
 import Moment from 'react-moment';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import TaskList from '../tasks/TaskList';
 import Loading from '../layout/Loading';
+import Icon from '@mdi/react';
+import { mdiPencil } from '@mdi/js';
 const Project = props => {
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
@@ -56,6 +59,11 @@ const Project = props => {
                         <p>
                             <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
                         </p>
+                        <Button varient="secondary" size="sm" as={Link} to={'/projects/edit/' + props.match.params.id}>
+                            <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
+                        </Button>
+                        <hr />
+
                         <h3>Tasks</h3>
                         {project.id !== 0 && <TaskList project_id={[project.id]} />}
                     </Col>

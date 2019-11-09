@@ -16,7 +16,7 @@ import Clients from '../pages/Clients';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 import Project from '../projects/Project';
-import AddProject from '../projects/AddProject';
+import AddEditProject from '../projects/AddEditProject';
 import NotFound from '../error/NotFound';
 import Home from '../pages/Home';
 import ResetPassword from '../auth/ForgotPassword';
@@ -31,7 +31,8 @@ function RouterApp() {
                 <Route exact path="/" component={Home} />
                 <AuthRoute exact path="/dashboard" component={Dashboard} />
                 <AuthRoute exact path="/projects" component={Projects} />
-                <AuthRoute exact path="/projects/add" component={AddProject} />
+                <AuthRoute exact path="/projects/add" component={AddEditProject} />
+                <AuthRoute exact path="/projects/edit/:id" component={AddEditProject} />
                 <AuthRoute exact path="/tasks" component={Tasks} />
                 <AuthRoute exact path="/tasks/add" component={AddTask} />
                 <AuthRoute exact path="/clients" component={Clients} />
