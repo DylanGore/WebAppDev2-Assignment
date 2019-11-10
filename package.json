@@ -7,6 +7,7 @@
     "@mdi/react": "^1.2.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "env-cmd": "^10.0.1",
     "firebase": "^7.3.0",
     "gravatar": "^1.8.0",
     "moment": "^2.24.0",
@@ -25,11 +26,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:deploy": "env-cmd -f deploy.env npm run build && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook --port 3001",
     "build-storybook": "build-storybook",
-    "fake-backend": "json-server db.json -p 3002"
+    "fake-backend": "json-server db.json -p 3002 -H 0.0.0.0"
   },
   "eslintConfig": {
     "extends": "react-app",
