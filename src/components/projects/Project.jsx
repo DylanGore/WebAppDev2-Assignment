@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
@@ -13,6 +13,7 @@ import Loading from '../layout/Loading';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
+import PageTitle from '../misc/PageTitle';
 const Project = props => {
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
@@ -49,45 +50,57 @@ const Project = props => {
 
     if (!loading) {
         return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h1>
-                            {project.title} <small>(ID: {project.id})</small>
-                        </h1>
-                        <h2>
-                            <small className="text-muted">{project.type}</small>
-                        </h2>
-                        <p className="lead">{project.description}</p>
-                        <p>
-                            <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
-                        </p>
+            <Fragment>
+                <PageTitle title={project.title} />
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <h1>
+                                {project.title} <small>(ID: {project.id})</small>
+                            </h1>
+                            <h2>
+                                <small className="text-muted">{project.type}</small>
+                            </h2>
+                            <p className="lead">{project.description}</p>
+                            <p>
+                                <strong>Due:</strong> <Moment format="LLLL">{project.due}</Moment>
+                            </p>
 
-                        <hr />
+                            <hr />
 
-                        <h3>Tasks</h3>
-                        {project.id !== 0 ? <TaskList project_id={[project.id]} /> : <p className="lead">No tasks.</p>}
+                            <h3>Tasks</h3>
+                            {project.id !== 0 ? (
+                                <TaskList project_id={[project.id]} />
+                            ) : (
+                                <p className="lead">No tasks.</p>
+                            )}
 
-                        <hr />
+                            <hr />
 
-                        <ButtonGroup aria-label="Project Options">
-                            <Button variant="info" size="sm" as={Link} to={'/projects/edit/' + props.match.params.id}>
-                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
-                            </Button>
-                            <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
-                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Project
-                            </Button>
-                        </ButtonGroup>
+                            <ButtonGroup aria-label="Project Options">
+                                <Button
+                                    variant="info"
+                                    size="sm"
+                                    as={Link}
+                                    to={'/projects/edit/' + props.match.params.id}
+                                >
+                                    <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
+                                </Button>
+                                <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
+                                    <Icon path={mdiDelete} size={0.8} color="white" /> Delete Project
+                                </Button>
+                            </ButtonGroup>
 
-                        <DeleteModal
-                            show={modalShow}
-                            onHide={() => setModalShow(!modalShow)}
-                            type="projects"
-                            id={project.id}
-                        />
-                    </Col>
-                </Row>
-            </Container>
+                            <DeleteModal
+                                show={modalShow}
+                                onHide={() => setModalShow(!modalShow)}
+                                type="projects"
+                                id={project.id}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+            </Fragment>
         );
     } else {
         return <Loading />;

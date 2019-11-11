@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +10,7 @@ import DateTimePicker from 'react-datetime-picker';
 import { mdiCalendar, mdiClose, mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js';
 import axios from 'axios';
 import Icon from '@mdi/react';
+import PageTitle from '../misc/PageTitle';
 
 const AddEditTask = props => {
     const [projects, setProjects] = useState(null);
@@ -105,64 +106,67 @@ const AddEditTask = props => {
     };
 
     return (
-        <Container fluid>
-            <Row className="justify-content-center text-center">
-                <Col>
-                    <h1>{pageInfo.title}</h1>
-                </Col>
-            </Row>
-            <Row className="justify-content-center">
-                <Col md={6} sm={12}>
-                    <DisplayMessage />
-                    <Form onSubmit={handleSubmit} validated={validated}>
-                        <Form.Group controlId="project">
-                            <Form.Label>Project:</Form.Label>
-                            <Form.Control as="select" onChange={handleChange} value={task.project} required>
-                                {projects &&
-                                    projects.map(project => {
-                                        return (
-                                            <option value={project.id} key={project.id}>
-                                                {project.title}
-                                            </option>
-                                        );
-                                    })}
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group controlId="description">
-                            <Form.Label>Description:</Form.Label>
-                            <Form.Control
-                                as="textarea"
-                                rows="3"
-                                onChange={handleChange}
-                                value={task.description}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Due:</Form.Label>
-                            <Form.Control
-                                as={DateTimePicker}
-                                className="dateTime"
-                                value={task.due}
-                                onChange={timestamp => setTask({ ...task, due: timestamp })}
-                                calendarIcon={<Icon path={mdiCalendar} size={1} />}
-                                clearIcon={<Icon path={mdiClose} size={1} required />}
-                            />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            <Icon path={pageInfo.icon} size={1} color="white" />
-                            {pageInfo.button}
-                        </Button>
-                    </Form>
-                    <br />
-                    {taskId && (
-                        <Button as={Link} to={'/tasks/' + taskId} size="sm" variant="secondary">
-                            <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to task
-                        </Button>
-                    )}
-                </Col>
-            </Row>
-        </Container>
+        <Fragment>
+            <PageTitle title={pageInfo.title} />
+            <Container fluid>
+                <Row className="justify-content-center text-center">
+                    <Col>
+                        <h1>{pageInfo.title}</h1>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col md={6} sm={12}>
+                        <DisplayMessage />
+                        <Form onSubmit={handleSubmit} validated={validated}>
+                            <Form.Group controlId="project">
+                                <Form.Label>Project:</Form.Label>
+                                <Form.Control as="select" onChange={handleChange} value={task.project} required>
+                                    {projects &&
+                                        projects.map(project => {
+                                            return (
+                                                <option value={project.id} key={project.id}>
+                                                    {project.title}
+                                                </option>
+                                            );
+                                        })}
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group controlId="description">
+                                <Form.Label>Description:</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows="3"
+                                    onChange={handleChange}
+                                    value={task.description}
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Due:</Form.Label>
+                                <Form.Control
+                                    as={DateTimePicker}
+                                    className="dateTime"
+                                    value={task.due}
+                                    onChange={timestamp => setTask({ ...task, due: timestamp })}
+                                    calendarIcon={<Icon path={mdiCalendar} size={1} />}
+                                    clearIcon={<Icon path={mdiClose} size={1} required />}
+                                />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                <Icon path={pageInfo.icon} size={1} color="white" />
+                                {pageInfo.button}
+                            </Button>
+                        </Form>
+                        <br />
+                        {taskId && (
+                            <Button as={Link} to={'/tasks/' + taskId} size="sm" variant="secondary">
+                                <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to task
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+        </Fragment>
     );
 };
 

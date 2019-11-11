@@ -37,9 +37,9 @@ const Home = () => {
                         <Jumbotron className="text-center px-5" fluid>
                             <h1>Project Manager</h1>
                             <p>
-                                This is a simple project management app. It has authentication and registion along with
-                                the ability to add, view, edit and remove projects. It also features client and task
-                                management.
+                                This is a simple project management app. It has authentication and registration along
+                                with the ability to add, view, edit and remove projects. It also features client and
+                                task management.
                             </p>
                             <p>
                                 <DisplayButton />

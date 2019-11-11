@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
@@ -11,6 +11,7 @@ import Loading from '../layout/Loading';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
+import PageTitle from '../misc/PageTitle';
 const Client = props => {
     const [client, setClient] = useState({});
     const [loading, setLoading] = useState(true);
@@ -46,40 +47,48 @@ const Client = props => {
 
     if (!loading) {
         return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h1>Client: {client.name}</h1>
-                        <ul>
-                            <li>
-                                <strong>ID:</strong> {client.id}
-                            </li>
-                            <li>
-                                <strong>E-Mail:</strong> {client.email}
-                            </li>
-                            <li>
-                                <strong>Phone:</strong> {client.phone ? client.phone : 'No Phone'}
-                            </li>
-                        </ul>
+            <Fragment>
+                <PageTitle title={client.name} />
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <h1>Client: {client.name}</h1>
+                            <ul>
+                                <li>
+                                    <strong>ID:</strong> {client.id}
+                                </li>
+                                <li>
+                                    <strong>E-Mail:</strong> {client.email}
+                                </li>
+                                <li>
+                                    <strong>Phone:</strong> {client.phone ? client.phone : 'No Phone'}
+                                </li>
+                            </ul>
 
-                        <ButtonGroup aria-label="Client Options">
-                            <Button variant="info" size="sm" as={Link} to={'/clients/edit/' + props.match.params.id}>
-                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Client
-                            </Button>
-                            <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
-                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Client
-                            </Button>
-                        </ButtonGroup>
+                            <ButtonGroup aria-label="Client Options">
+                                <Button
+                                    variant="info"
+                                    size="sm"
+                                    as={Link}
+                                    to={'/clients/edit/' + props.match.params.id}
+                                >
+                                    <Icon path={mdiPencil} size={0.8} color="white" /> Edit Client
+                                </Button>
+                                <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
+                                    <Icon path={mdiDelete} size={0.8} color="white" /> Delete Client
+                                </Button>
+                            </ButtonGroup>
 
-                        <DeleteModal
-                            show={modalShow}
-                            onHide={() => setModalShow(!modalShow)}
-                            type="clients"
-                            id={client.id}
-                        />
-                    </Col>
-                </Row>
-            </Container>
+                            <DeleteModal
+                                show={modalShow}
+                                onHide={() => setModalShow(!modalShow)}
+                                type="clients"
+                                id={client.id}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+            </Fragment>
         );
     } else {
         return <Loading />;

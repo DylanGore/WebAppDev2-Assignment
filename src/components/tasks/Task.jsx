@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import history from '../../config/history';
@@ -12,6 +12,7 @@ import Loading from '../layout/Loading';
 import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
+import PageTitle from '../misc/PageTitle';
 const Task = props => {
     const [task, setTask] = useState({});
     const [loading, setLoading] = useState(true);
@@ -46,35 +47,38 @@ const Task = props => {
 
     if (!loading) {
         return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <h1>
-                            Task <small>(ID: {task.id})</small>
-                        </h1>
-                        <p className="lead">{task.description}</p>
-                        <p>
-                            <strong>Due:</strong> <Moment format="LLLL">{task.due}</Moment>
-                        </p>
+            <Fragment>
+                <PageTitle title={'Task ' + task.id} />
+                <Container fluid>
+                    <Row>
+                        <Col>
+                            <h1>
+                                Task <small>(ID: {task.id})</small>
+                            </h1>
+                            <p className="lead">{task.description}</p>
+                            <p>
+                                <strong>Due:</strong> <Moment format="LLLL">{task.due}</Moment>
+                            </p>
 
-                        <ButtonGroup aria-label="Task Options">
-                            <Button variant="info" size="sm" as={Link} to={'/tasks/edit/' + props.match.params.id}>
-                                <Icon path={mdiPencil} size={0.8} color="white" /> Edit Task
-                            </Button>
-                            <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
-                                <Icon path={mdiDelete} size={0.8} color="white" /> Delete Task
-                            </Button>
-                        </ButtonGroup>
+                            <ButtonGroup aria-label="Task Options">
+                                <Button variant="info" size="sm" as={Link} to={'/tasks/edit/' + props.match.params.id}>
+                                    <Icon path={mdiPencil} size={0.8} color="white" /> Edit Task
+                                </Button>
+                                <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
+                                    <Icon path={mdiDelete} size={0.8} color="white" /> Delete Task
+                                </Button>
+                            </ButtonGroup>
 
-                        <DeleteModal
-                            show={modalShow}
-                            onHide={() => setModalShow(!modalShow)}
-                            type="tasks"
-                            id={task.id}
-                        />
-                    </Col>
-                </Row>
-            </Container>
+                            <DeleteModal
+                                show={modalShow}
+                                onHide={() => setModalShow(!modalShow)}
+                                type="tasks"
+                                id={task.id}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+            </Fragment>
         );
     } else {
         return <Loading />;

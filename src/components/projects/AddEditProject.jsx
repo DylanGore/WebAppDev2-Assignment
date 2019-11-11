@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +10,7 @@ import DateTimePicker from 'react-datetime-picker';
 import { mdiCalendar, mdiClose, mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js';
 import axios from 'axios';
 import Icon from '@mdi/react';
+import PageTitle from '../misc/PageTitle';
 
 const AddEditProject = props => {
     const [project, setProject] = useState({ title: '' });
@@ -105,7 +106,9 @@ const AddEditProject = props => {
     };
 
     return (
-        <Container fluid>
+        <Fragment>
+            <PageTitle title={pageInfo.title} />
+            <Container fluid>
             <Row className="justify-content-center text-center">
                 <Col>
                     <h1>{pageInfo.title}</h1>
@@ -174,6 +177,7 @@ const AddEditProject = props => {
                 </Col>
             </Row>
         </Container>
+        </Fragment>
     );
 };
 

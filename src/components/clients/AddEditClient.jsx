@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,6 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 import { mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js';
 import Icon from '@mdi/react';
 import axios from 'axios';
+import PageTitle from '../misc/PageTitle';
 
 const AddEditClient = props => {
     const [pageInfo, setPageInfo] = useState({ title: 'Add a new Client', button: 'Add Client', icon: mdiPlus });
@@ -85,42 +86,45 @@ const AddEditClient = props => {
     };
 
     return (
-        <Container fluid>
-            <Row className="justify-content-center text-center">
-                <Col>
-                    <h1>{pageInfo.title}</h1>
-                </Col>
-            </Row>
-            <Row className="justify-content-center">
-                <Col md={6} sm={12}>
-                    <DisplayMessage />
-                    <Form onSubmit={handleSubmit} validated={validated}>
-                        <Form.Group controlId="name">
-                            <Form.Label>Name:</Form.Label>
-                            <Form.Control type="text" onChange={handleChange} value={client.name} required />
-                        </Form.Group>
-                        <Form.Group controlId="email">
-                            <Form.Label>E-mail Address:</Form.Label>
-                            <Form.Control type="emial" onChange={handleChange} value={client.email} required />
-                        </Form.Group>
-                        <Form.Group controlId="phone">
-                            <Form.Label>Phone Number:</Form.Label>
-                            <Form.Control type="phone" onChange={handleChange} value={client.phone} />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            <Icon path={pageInfo.icon} size={1} color="white" />
-                            {pageInfo.button}
-                        </Button>
-                    </Form>
-                    <br />
-                    {clientId && (
-                        <Button as={Link} to={'/clients/' + clientId} size="sm" variant="secondary">
-                            <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to client
-                        </Button>
-                    )}
-                </Col>
-            </Row>
-        </Container>
+        <Fragment>
+            <PageTitle title={pageInfo.title} />
+            <Container fluid>
+                <Row className="justify-content-center text-center">
+                    <Col>
+                        <h1>{pageInfo.title}</h1>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col md={6} sm={12}>
+                        <DisplayMessage />
+                        <Form onSubmit={handleSubmit} validated={validated}>
+                            <Form.Group controlId="name">
+                                <Form.Label>Name:</Form.Label>
+                                <Form.Control type="text" onChange={handleChange} value={client.name} required />
+                            </Form.Group>
+                            <Form.Group controlId="email">
+                                <Form.Label>E-mail Address:</Form.Label>
+                                <Form.Control type="emial" onChange={handleChange} value={client.email} required />
+                            </Form.Group>
+                            <Form.Group controlId="phone">
+                                <Form.Label>Phone Number:</Form.Label>
+                                <Form.Control type="phone" onChange={handleChange} value={client.phone} />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                <Icon path={pageInfo.icon} size={1} color="white" />
+                                {pageInfo.button}
+                            </Button>
+                        </Form>
+                        <br />
+                        {clientId && (
+                            <Button as={Link} to={'/clients/' + clientId} size="sm" variant="secondary">
+                                <Icon path={mdiArrowLeft} size={0.8} color="white" /> Back to client
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+        </Fragment>
     );
 };
 

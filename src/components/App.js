@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import firebase from '../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AppRouter from './routes/RouterApp';
 import Loading from './layout/Loading';
+import PageTitle from './misc/PageTitle';
 
 function App() {
     // eslint-disable-next-line
@@ -11,14 +12,16 @@ function App() {
     if (!initialising) {
         return (
             <div className="App">
+                <PageTitle />
                 <AppRouter />
             </div>
         );
     } else {
         return (
-            <h1>
+            <Fragment>
+                <PageTitle />
                 <Loading />
-            </h1>
+            </Fragment>
         );
     }
 }

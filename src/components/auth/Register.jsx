@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from '../../config/firebase';
 import Container from 'react-bootstrap/Container';
@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import gravatar from 'gravatar';
+import PageTitle from '../misc/PageTitle';
 
 const Register = props => {
     const [formData, setFormData] = useState({
@@ -85,65 +86,68 @@ const Register = props => {
     };
 
     return (
-        <Container fluid>
-            <Row className="justify-content-center text-center">
-                <Col>
-                    <h1>Register</h1>
-                </Col>
-            </Row>
-            <Row className="justify-content-center">
-                <Col md={6} sm={12}>
-                    <DisplayMessage />
-                    <Form onSubmit={handleSubmit} validated={validated}>
-                        <Form.Group controlId="firstName">
-                            <Form.Label>First Name:</Form.Label>
-                            <Form.Control type="text" placeholder="Alias" onChange={handleChange} required />
-                        </Form.Group>
-                        <Form.Group controlId="lastName">
-                            <Form.Label>Last Name:</Form.Label>
-                            <Form.Control type="text" placeholder="Fakename" onChange={handleChange} required />
-                        </Form.Group>
-                        <Form.Group controlId="email">
-                            <Form.Label>E-mail address:</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="afakename@example.com"
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="password">
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                onChange={handleChange}
-                                pattern=".{6,}"
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="passwordConfirm">
-                            <Form.Label>Confirm Password:</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Confirm Password"
-                                onChange={handleChange}
-                                pattern=".{6,}"
-                                required
-                            />
-                        </Form.Group>
+        <Fragment>
+            <PageTitle title="Register" />
+            <Container fluid>
+                <Row className="justify-content-center text-center">
+                    <Col>
+                        <h1>Register</h1>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col md={6} sm={12}>
+                        <DisplayMessage />
+                        <Form onSubmit={handleSubmit} validated={validated}>
+                            <Form.Group controlId="firstName">
+                                <Form.Label>First Name:</Form.Label>
+                                <Form.Control type="text" placeholder="Alias" onChange={handleChange} required />
+                            </Form.Group>
+                            <Form.Group controlId="lastName">
+                                <Form.Label>Last Name:</Form.Label>
+                                <Form.Control type="text" placeholder="Fakename" onChange={handleChange} required />
+                            </Form.Group>
+                            <Form.Group controlId="email">
+                                <Form.Label>E-mail address:</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="afakename@example.com"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="password">
+                                <Form.Label>Password:</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password"
+                                    onChange={handleChange}
+                                    pattern=".{6,}"
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="passwordConfirm">
+                                <Form.Label>Confirm Password:</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    onChange={handleChange}
+                                    pattern=".{6,}"
+                                    required
+                                />
+                            </Form.Group>
 
-                        <p className="text-muted">
-                            Already have an account? Click <Link to="/login">here</Link> to login.
-                        </p>
+                            <p className="text-muted">
+                                Already have an account? Click <Link to="/login">here</Link> to login.
+                            </p>
 
-                        <Button variant="primary" type="submit">
-                            Register
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+                            <Button variant="primary" type="submit">
+                                Register
+                            </Button>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
+        </Fragment>
     );
 };
 
