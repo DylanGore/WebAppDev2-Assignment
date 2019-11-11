@@ -3,6 +3,7 @@ import axios from 'axios';
 import SimpleProject from './SimpleProject';
 import Loading from '../layout/Loading';
 
+// Lists projects, either all of them or a limited number
 const ProjectList = ({ limit }) => {
     const [projects, setProjects] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -16,15 +17,12 @@ const ProjectList = ({ limit }) => {
             url = process.env.REACT_APP_BACKEND_LOC + 'projects';
         }
 
-        axios
-            .get(url)
-            .then(res => {
-                setProjects(res.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+        // prettier-ignore
+        // Get projects
+        axios.get(url).then(res => {
+            setProjects(res.data);
+            setLoading(false);
+        }).catch(err =>  console.error('Error getting projects', err.message));
     }, [limit]);
 
     if (!loading) {

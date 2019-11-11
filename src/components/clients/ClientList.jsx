@@ -6,11 +6,13 @@ import Icon from '@mdi/react';
 import { mdiCellphone, mdiEmail } from '@mdi/js';
 import Loading from '../layout/Loading';
 
+// Lists clients, either all of them or a limited number
 const ClientList = ({ limit }) => {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Set url based on if a limit prop was passed to the component
         var url = '';
         if (limit && limit !== 0) {
             url = process.env.REACT_APP_BACKEND_LOC + 'clients?start=0&_limit=' + limit;
@@ -18,15 +20,12 @@ const ClientList = ({ limit }) => {
             url = process.env.REACT_APP_BACKEND_LOC + 'clients';
         }
 
-        axios
-            .get(url)
-            .then(res => {
-                setClients(res.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+        // prettier-ignore
+        // Get list of clients
+        axios.get(url).then(res => {
+            setClients(res.data);
+            setLoading(false);
+        }).catch(err => console.error('Error getting clients', err.message));
     }, [limit]);
 
     if (!loading) {

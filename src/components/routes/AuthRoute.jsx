@@ -4,8 +4,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import firebase from '../../config/firebase';
 import Unauthorized from '../error/Unauthorized';
 
+// Wraps the standered Route compoent requiring only logged in users to display the intended component
 const AuthRoute = ({ component, ...options }) => {
-    // eslint-disable-next-line
     const [user] = useAuthState(firebase.auth());
     const finalComponent = user ? component : Unauthorized;
     return <Route {...options} component={finalComponent} />;

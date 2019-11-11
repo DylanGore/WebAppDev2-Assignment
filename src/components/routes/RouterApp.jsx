@@ -25,6 +25,7 @@ import AddEditClient from '../clients/AddEditClient';
 import Task from '../tasks/Task';
 import Client from '../clients/Client';
 
+// App router - defines all routes and their options
 function RouterApp() {
     return (
         <Router history={history}>

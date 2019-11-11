@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 
-const PublicLinks = () => {
+// Links for logged in users only
+const NavbarLinks = () => {
     return (
         <Fragment>
             <Nav.Link as={Link} to="/dashboard">
@@ -21,4 +22,4 @@ const PublicLinks = () => {
     );
 };
 
-export default PublicLinks;
+export default NavbarLinks;

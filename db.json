@@ -1,5 +1,6 @@
 {
-  "projects": [{
+  "projects": [
+    {
       "title": "Project 1",
       "type": "Website",
       "client": 1,
@@ -46,9 +47,18 @@
       "description": "Example",
       "due": "2019-11-01T13:00:00.000Z",
       "id": 6
+    },
+    {
+      "title": "Exampke",
+      "type": "Personal Project",
+      "client": "3",
+      "description": "eetw",
+      "due": "2019-10-30T00:00:00.000Z",
+      "id": 7
     }
   ],
-  "tasks": [{
+  "tasks": [
+    {
       "project": 1,
       "description": "Example Task 1",
       "due": "2019-12-01T23:59:00.000Z",
@@ -91,7 +101,8 @@
       "id": 6
     }
   ],
-  "clients": [{
+  "clients": [
+    {
       "name": "Client 1",
       "email": "client1@example.com",
       "phone": "+3530800000000",

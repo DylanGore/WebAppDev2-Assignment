@@ -5,13 +5,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 import DateTimePicker from 'react-datetime-picker';
 import { mdiCalendar, mdiClose, mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js';
 import axios from 'axios';
 import Icon from '@mdi/react';
 import PageTitle from '../misc/PageTitle';
+import DisplayMessage from '../misc/DisplayMessage';
 
+// Allows new tasks to be added and existing tasks to be edited
 const AddEditTask = props => {
     const [projects, setProjects] = useState(null);
     const [pageInfo, setPageInfo] = useState({ title: 'Add a new Task', button: 'Add Task', icon: mdiPlus });
@@ -21,32 +22,26 @@ const AddEditTask = props => {
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(process.env.REACT_APP_BACKEND_LOC + 'projects')
-            .then(res => {
-                setProjects(res.data);
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+        // prettier-ignore
+        // Get list of tasks to populate the tasks field in the form
+        axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects').then(res => {
+            setProjects(res.data);
+        }).catch(err => console.error('Error getting tasks', err.message));
 
-        // Edit Mode
+        // If there is an id paramater in the URL, set to edit mode
         if (props.match.params.id) {
-            setTaskId(props.match.params.id);
             console.log('Edit Mode');
-            axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + props.match.params.id)
-                .then(res => {
-                    // console.log(res.data);
-                    setPageInfo({ title: 'Edit Task: ' + res.data.id, button: 'Edit Task', icon: mdiPencil });
-                    setTask({ ...res.data, due: null });
-                })
-                .catch(err => {
-                    console.log(err.message);
-                });
+            setTaskId(props.match.params.id);
+            // prettier-ignore
+            // Get task to edit and populate the task state object and form
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + props.match.params.id).then(res => {
+                setPageInfo({ title: 'Edit Task: ' + res.data.id, button: 'Edit Task', icon: mdiPencil });
+                setTask({ ...res.data, due: null });
+            }).catch(err =>  console.error(err.message));
         }
     }, [props.match.params.id]);
 
+    // Save any changes in form to state
     const handleChange = e => {
         setTask({
             ...task,
@@ -54,54 +49,38 @@ const AddEditTask = props => {
         });
     };
 
+    // Process form data when it's submitted
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.currentTarget;
 
+        // Ensure the date is valid as the form will consider it valid when it may not be
         if (task.due === null) {
             setMessage({ type: 'danger', value: 'Please enter a valid date!' });
             return;
         }
 
+        // Only proceed if the form is valid
         if (form.checkValidity() === true) {
             setValidated(true);
 
             if (taskId) {
                 // Edit Task
-                axios
-                    .put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task)
-                    .then(res => {
-                        setMessage({ type: 'success', value: 'Task Edit Successful!' });
-                    })
-                    .catch(err => {
-                        setMessage({ type: 'danger', value: err.message });
-                    });
+                // prettier-ignore
+                axios.put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task).then(res => {
+                    setMessage({ type: 'success', value: 'Task Edit Successful!' });
+                }).catch(err => setMessage({ type: 'danger', value: err.message }));
             } else {
                 // Add Task
-                axios
-                    .post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task)
-                    .then(res => {
-                        setMessage({ type: 'success', value: 'Task Added!' });
-                    })
-                    .catch(err => {
-                        setMessage({ type: 'danger', value: err.message });
-                    });
+                // prettier-ignore
+                axios.post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task).then(res => {
+                    setMessage({ type: 'success', value: 'Task Added!' });
+                }).catch(err => setMessage({ type: 'danger', value: err.message }));
             }
 
+            // Clear the form
             form.reset();
             setTask({});
-        }
-    };
-
-    const DisplayMessage = () => {
-        if (!message) {
-            return null;
-        } else {
-            return (
-                <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>
-                    {message.value}
-                </Alert>
-            );
         }
     };
 
@@ -116,7 +95,7 @@ const AddEditTask = props => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col md={6} sm={12}>
-                        <DisplayMessage />
+                        {message && <DisplayMessage message={message} setMessage={setMessage} />}
                         <Form onSubmit={handleSubmit} validated={validated}>
                             <Form.Group controlId="project">
                                 <Form.Label>Project:</Form.Label>
@@ -133,24 +112,11 @@ const AddEditTask = props => {
                             </Form.Group>
                             <Form.Group controlId="description">
                                 <Form.Label>Description:</Form.Label>
-                                <Form.Control
-                                    as="textarea"
-                                    rows="3"
-                                    onChange={handleChange}
-                                    value={task.description}
-                                    required
-                                />
+                                <Form.Control as="textarea" rows="3" onChange={handleChange} value={task.description} required />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Due:</Form.Label>
-                                <Form.Control
-                                    as={DateTimePicker}
-                                    className="dateTime"
-                                    value={task.due}
-                                    onChange={timestamp => setTask({ ...task, due: timestamp })}
-                                    calendarIcon={<Icon path={mdiCalendar} size={1} />}
-                                    clearIcon={<Icon path={mdiClose} size={1} required />}
-                                />
+                                <Form.Control as={DateTimePicker} className="dateTime" value={task.due} onChange={timestamp => setTask({ ...task, due: timestamp })} calendarIcon={<Icon path={mdiCalendar} size={1} />} clearIcon={<Icon path={mdiClose} size={1} required />} />
                             </Form.Group>
                             <Button variant="primary" type="submit">
                                 <Icon path={pageInfo.icon} size={1} color="white" />

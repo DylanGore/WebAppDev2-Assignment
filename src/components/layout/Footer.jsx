@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+// App footer
 const Footer = () => {
     const githubLink = 'https://github.com/DylanGore/WebAppDev2-Assignment';
 
@@ -13,7 +14,9 @@ const Footer = () => {
         <Container className="footer" fluid>
             <Row className="my-auto">
                 <Col></Col>
-                <Col>&copy; Copyright 2019 Dylan Gore</Col>
+                <Col sm={12} md={4}>
+                    &copy; Copyright 2019 Dylan Gore
+                </Col>
                 <Col>
                     <a href={githubLink} title="View Source Code" target="_">
                         <Button size="sm" variant="dark" className="float-right">

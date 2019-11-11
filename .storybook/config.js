@@ -15,5 +15,5 @@ addParameters({
     }
 });
 
-// automatically import all files ending in *.stories.js
+// automatically import all files ending in *.stories.js from /src/stories
 configure(require.context('../src/stories', true, /\.stories\.js$/), module);

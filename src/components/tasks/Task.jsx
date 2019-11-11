@@ -13,6 +13,8 @@ import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
 import PageTitle from '../misc/PageTitle';
+
+// Displays a single task in full detail
 const Task = props => {
     const [task, setTask] = useState({});
     const [loading, setLoading] = useState(true);
@@ -23,15 +25,11 @@ const Task = props => {
             // Get the project id that was passed in via route
             var id = props.match.params.id.toString();
             // Use axios to request the project info, redirect to 404 if there is an error
-            axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + id)
-                .then(res => {
-                    setTask(res.data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    history.push('/404');
-                });
+            // prettier-ignore
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + id).then(res => {
+                setTask(res.data);
+                setLoading(false);
+            }).catch(() => history.push('/404'));
         }
     }, [props.match.params.id]);
 
@@ -69,12 +67,7 @@ const Task = props => {
                                 </Button>
                             </ButtonGroup>
 
-                            <DeleteModal
-                                show={modalShow}
-                                onHide={() => setModalShow(!modalShow)}
-                                type="tasks"
-                                id={task.id}
-                            />
+                            <DeleteModal show={modalShow} onHide={() => setModalShow(!modalShow)} type="tasks" id={task.id} />
                         </Col>
                     </Row>
                 </Container>

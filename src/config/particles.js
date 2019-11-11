@@ -1,3 +1,4 @@
+// Options for particles.js
 export default {
     particles: {
         number: {

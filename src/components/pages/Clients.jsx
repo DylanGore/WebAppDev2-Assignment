@@ -8,6 +8,8 @@ import Icon from '@mdi/react';
 import { mdiAccountPlus } from '@mdi/js';
 import ClientList from '../clients/ClientList';
 import PageTitle from '../misc/PageTitle';
+
+// Lists clients
 const Clients = () => {
     return (
         <Fragment>

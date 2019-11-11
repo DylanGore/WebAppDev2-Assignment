@@ -12,6 +12,8 @@ import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
 import PageTitle from '../misc/PageTitle';
+
+// Displays a single project in full detail
 const Client = props => {
     const [client, setClient] = useState({});
     const [loading, setLoading] = useState(true);
@@ -21,16 +23,12 @@ const Client = props => {
         if (props.match.params.id) {
             // Get the project id that was passed in via route
             var id = props.match.params.id.toString();
-            // Use axios to request the project info, redirect to 404 if there is an error
-            axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id)
-                .then(res => {
-                    setClient(res.data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    history.push('/404');
-                });
+            // prettier-ignore
+            // Use axios to request client info, redirect to 404 if there is an error
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id).then(res => {
+                setClient(res.data);
+                setLoading(false);
+            }).catch(() => history.push('/404'));
         }
     }, [props.match.params.id]);
 
@@ -66,12 +64,7 @@ const Client = props => {
                             </ul>
 
                             <ButtonGroup aria-label="Client Options">
-                                <Button
-                                    variant="info"
-                                    size="sm"
-                                    as={Link}
-                                    to={'/clients/edit/' + props.match.params.id}
-                                >
+                                <Button variant="info" size="sm" as={Link} to={'/clients/edit/' + props.match.params.id}>
                                     <Icon path={mdiPencil} size={0.8} color="white" /> Edit Client
                                 </Button>
                                 <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
@@ -79,12 +72,7 @@ const Client = props => {
                                 </Button>
                             </ButtonGroup>
 
-                            <DeleteModal
-                                show={modalShow}
-                                onHide={() => setModalShow(!modalShow)}
-                                type="clients"
-                                id={client.id}
-                            />
+                            <DeleteModal show={modalShow} onHide={() => setModalShow(!modalShow)} type="clients" id={client.id} />
                         </Col>
                     </Row>
                 </Container>

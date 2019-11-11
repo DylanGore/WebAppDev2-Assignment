@@ -7,25 +7,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 import PageTitle from '../misc/PageTitle';
+import DisplayMessage from '../misc/DisplayMessage';
+
+// User login page
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
 
-    const DisplayMessage = () => {
-        if (!message) {
-            return null;
-        } else {
-            return (
-                <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>
-                    {message.value}
-                </Alert>
-            );
-        }
-    };
-
+    // Save any changes in form to state
     const handleChange = e => {
         setFormData({
             ...formData,
@@ -33,21 +24,20 @@ const Login = () => {
         });
     };
 
+    // Process form data when it's submitted
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.currentTarget;
+        // Only proceed if the form is valid
         if (form.checkValidity() === true) {
             setValidated(true);
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(formData.email, formData.password)
-                .then(() => {
-                    setMessage({ value: 'Login Successful!', type: 'success' });
-                    history.push('/dashboard');
-                })
-                .catch(err => {
-                    setMessage({ value: err.message, type: 'danger' });
-                });
+            // prettier-ignore
+            firebase.auth().signInWithEmailAndPassword(formData.email, formData.password).then(() => {
+                setMessage({ value: 'Login Successful!', type: 'success' });
+                history.push('/dashboard');
+            }).catch(err => {
+                setMessage({ value: err.message, type: 'danger' });
+            });
         } else {
             setMessage({ value: 'Form Invalid!', type: 'danger' });
         }
@@ -64,16 +54,11 @@ const Login = () => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col md={6} sm={12}>
-                        <DisplayMessage />
+                        {message && <DisplayMessage message={message} setMessage={setMessage} />}
                         <Form onSubmit={handleSubmit} validated={validated}>
                             <Form.Group controlId="email">
                                 <Form.Label>E-mail address:</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    placeholder="example@example.com"
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <Form.Control type="email" placeholder="example@example.com" onChange={handleChange} required />
                             </Form.Group>
 
                             <Form.Group controlId="password">

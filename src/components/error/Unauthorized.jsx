@@ -8,6 +8,7 @@ import { mdiAlert, mdiHome } from '@mdi/js';
 import { Link } from 'react-router-dom';
 import PageTitle from '../misc/PageTitle';
 
+// 401 error page
 const Unauthorized = () => {
     return (
         <Fragment>

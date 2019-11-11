@@ -14,7 +14,8 @@ This is a simple project management app. It has authentication and registion alo
 -   Custom componets created to handle route guarding (ensuring private routes can only be accessed by logged in users)
 -   Full CRUD functionallity for projects, clients and tasks
 -   The user's avatar is downloaded from Gravatar if it exists, if not a default image is displayed
--   Connection to a json-server backend
+-   Front end deployed to Firebase Hosting
+-   Connection to a json-server backend (hosted on my own sever)
 -   Responsive design
 
 ## Setup
@@ -57,7 +58,10 @@ This is a simple project management app. It has authentication and registion alo
 
 ## Data Model Design
 
-TODO
+![data-model](img/data-model.png)
+
+-   Tasks are linked to a project using a project id
+-   Clients are linked to a project using a project id
 
 ## UI Design
 
@@ -70,6 +74,11 @@ The app home page.
 
 ![404](img/404.png)
 The 'Not Found' error page - is displayed if the URL doen't match something in the router.
+
+### 401
+
+![401](img/401.png)
+The 'Unauthorized' error page
 
 ### Login
 
@@ -94,7 +103,7 @@ Shows a short list of projects and tasks, allows the user to view each in more d
 ### Projects
 
 ![projects](img/projects.png)
-Shows a full list of all projects.
+Shows a full list of projects.
 
 ### Project
 
@@ -104,7 +113,42 @@ Shows a single project with full details.
 ### Add/Edit Project
 
 ![add-edit-project](img/add-edit-project.png)
-Allows the user to add a new poroject, the same form is uesd for editing the project, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+Allows the user to add a new poroject, the same form is uesd for editing an existing project, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Tasks
+
+![tasks](img/tasks.png)
+Shows a full list of projects.
+
+### Task
+
+![task](img/task.png)
+Shows a single task with full details.
+
+### Add/Edit Task
+
+![add-edit-task](img/add-edit-task.png)
+Allows the user to add a new task, the same form is uesd for editing an existing task, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Clients
+
+![clients](img/client.png)
+Shows a full list of clients.
+
+### Client
+
+![client](img/client.png)
+Shows a single client with full details.
+
+### Add/Edit Client
+
+![add-edit-client](img/add-edit-client.png)
+Allows the user to add a new client, the same form is uesd for editing an existing client, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Delete
+
+![delete](img/delete.png)
+Prompts the user for confirmation before deleting an item.
 
 ## Routing
 
@@ -153,6 +197,8 @@ Allows the user to add a new poroject, the same form is uesd for editing the pro
     ![knobs](img/storybook-knobs.png)
 -   **[actions](https://www.npmjs.com/package/@storybook/addon-actions)** - shows a console message when certain actions are preformed (eg. clicking on a link)
     ![storybook-actions](img/storybook-actions.png)
+-   **[viewport](https://www.npmjs.com/package/@storybook/addon-viewport)** - allows testing of component responsiveness by emulating different devies
+    ![storybook-viewport](img/storybook-viewport.png)
 
 ## Backend (Optional)
 
@@ -164,4 +210,9 @@ Google's [Firebase](https://firebase.google.com) is used for authentication. Use
 
 ## Independent learning
 
-TODO
+-   React hooks, useEffect and useState, functional components
+-   Connecting to the Gravatar API for user avatars
+-   Deploying to Firebase and deploying the json-server to my own server
+-   react-helmet for modifing the page title dynamically
+-   Moment for date formatting
+-   Using env-cmd to pass different .env files for different situations

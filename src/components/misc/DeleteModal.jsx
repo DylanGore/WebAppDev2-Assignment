@@ -1,20 +1,23 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import Axios from 'axios';
+import axios from 'axios';
 import history from '../../config/history';
 
+// Deletes a specified object, prompting the user for confirmation before doing so
 const DeleteModal = props => {
+    // Call the onHide function when the cancel button is pressed to hide the dialog from the page
     const handleClose = () => {
         props.onHide();
     };
 
+    // Delete the object and change page to homepage after
     const handleDelete = () => {
-        Axios.delete(process.env.REACT_APP_BACKEND_LOC + props.type + '/' + props.id)
-            .then(res => {
-                console.log('Deleted Object');
-            })
-            .catch(err => console.log('Error Deleting Object: ' + err.message));
+        // prettier-ignore
+        axios.delete(process.env.REACT_APP_BACKEND_LOC + props.type + '/' + props.id).then(res => {
+            console.log('Deleted Object');
+        }).catch(err => console.error('Error Deleting Object', err.message));
+        // Call the onHide function to hide the dialog
         props.onHide();
         history.push('/');
     };

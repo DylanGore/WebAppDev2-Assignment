@@ -5,12 +5,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 import { mdiPlus, mdiPencil, mdiArrowLeft } from '@mdi/js';
 import Icon from '@mdi/react';
 import axios from 'axios';
 import PageTitle from '../misc/PageTitle';
+import DisplayMessage from '../misc/DisplayMessage';
 
+// Allows new clients to be added and existing clients to be edited
 const AddEditClient = props => {
     const [pageInfo, setPageInfo] = useState({ title: 'Add a new Client', button: 'Add Client', icon: mdiPlus });
     const [client, setClient] = useState({ name: '', email: '', phone: '' });
@@ -19,22 +20,20 @@ const AddEditClient = props => {
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
+        // If there is an id paramater in the URL, set to edit mode
         if (props.match.params.id) {
             console.log('Edit Mode');
             setClientId(props.match.params.id);
-            axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + props.match.params.id)
-                .then(res => {
-                    // console.log(res.data);
-                    setPageInfo({ title: 'Edit Client: ' + res.data.name, button: 'Edit Client', icon: mdiPencil });
-                    setClient(res.data);
-                })
-                .catch(err => {
-                    console.log(err.message);
-                });
+            // prettier-ignore
+            // Get list of clients to populate the clients field in the form
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + props.match.params.id).then(res => {
+                setPageInfo({ title: 'Edit Client: ' + res.data.name, button: 'Edit Client', icon: mdiPencil });
+                setClient(res.data);
+            }).catch(err => console.error('Error getting clients', err.message));
         }
     }, [props.match.params.id]);
 
+    // Save any changes in form to state
     const handleChange = e => {
         setClient({
             ...client,
@@ -42,46 +41,33 @@ const AddEditClient = props => {
         });
     };
 
+    // Process form data when it's submitted
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.currentTarget;
+
+        // Only proceed if form is valid
         if (form.checkValidity() === true) {
             setValidated(true);
             if (clientId) {
                 // Edit Client
-                axios
-                    .put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client)
-                    .then(res => {
-                        setMessage({ type: 'success', value: 'Client Edit Successful!' });
-                    })
-                    .catch(err => {
-                        setMessage({ type: 'danger', value: err.message });
-                    });
+                // prettier-ignore
+                axios.put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client).then(res => {
+                    setMessage({ type: 'success', value: 'Client Edit Successful!' });
+                }).catch(err => {
+                    setMessage({ type: 'danger', value: err.message });
+                });
             } else {
                 // Add Client
-                axios
-                    .post(process.env.REACT_APP_BACKEND_LOC + 'clients', client)
-                    .then(res => {
-                        setMessage({ type: 'success', value: 'Client Added!' });
-                    })
-                    .catch(err => {
-                        setMessage({ type: 'danger', value: err.message });
-                    });
+                // prettier-ignore
+                axios.post(process.env.REACT_APP_BACKEND_LOC + 'clients', client).then(res => {
+                    setMessage({ type: 'success', value: 'Client Added!' });
+                }).catch(err => {
+                    setMessage({ type: 'danger', value: err.message });
+                });
             }
         } else {
             setMessage({ value: 'Invalid Form!', type: 'danger' });
-        }
-    };
-
-    const DisplayMessage = () => {
-        if (!message) {
-            return null;
-        } else {
-            return (
-                <Alert variant={message.type} onClose={() => setMessage(null)} dismissible>
-                    {message.value}
-                </Alert>
-            );
         }
     };
 
@@ -96,7 +82,7 @@ const AddEditClient = props => {
                 </Row>
                 <Row className="justify-content-center">
                     <Col md={6} sm={12}>
-                        <DisplayMessage />
+                        {message && <DisplayMessage message={message} setMessage={setMessage} />}
                         <Form onSubmit={handleSubmit} validated={validated}>
                             <Form.Group controlId="name">
                                 <Form.Label>Name:</Form.Label>

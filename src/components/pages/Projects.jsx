@@ -8,6 +8,8 @@ import Icon from '@mdi/react';
 import { mdiFolderPlus } from '@mdi/js';
 import ProjectList from '../projects/ProjectList';
 import PageTitle from '../misc/PageTitle';
+
+// Lists projects
 const Projects = props => {
     return (
         <Fragment>

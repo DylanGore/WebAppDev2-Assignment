@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 
+// Displays basic info on a single project
 const SimpleProject = props => {
     const currProject = props.project;
     return (

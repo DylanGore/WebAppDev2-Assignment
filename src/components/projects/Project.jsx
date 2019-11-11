@@ -14,6 +14,8 @@ import Icon from '@mdi/react';
 import { mdiPencil, mdiDelete } from '@mdi/js';
 import DeleteModal from '../misc/DeleteModal';
 import PageTitle from '../misc/PageTitle';
+
+// Displays a single project in full detail
 const Project = props => {
     const [project, setProject] = useState({});
     const [loading, setLoading] = useState(true);
@@ -24,15 +26,11 @@ const Project = props => {
             // Get the project id that was passed in via route
             var id = props.match.params.id.toString();
             // Use axios to request the project info, redirect to 404 if there is an error
-            axios
-                .get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id)
-                .then(res => {
-                    setProject(res.data);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    history.push('/404');
-                });
+            // prettier-ignore
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + id).then(res => {
+                setProject(res.data);
+                setLoading(false);
+            }).catch(() => history.push('/404'));
         }
     }, [props.match.params.id]);
 
@@ -69,21 +67,12 @@ const Project = props => {
                             <hr />
 
                             <h3>Tasks</h3>
-                            {project.id !== 0 ? (
-                                <TaskList project_id={[project.id]} />
-                            ) : (
-                                <p className="lead">No tasks.</p>
-                            )}
+                            {project.id !== 0 ? <TaskList project_id={[project.id]} /> : <p className="lead">No tasks.</p>}
 
                             <hr />
 
                             <ButtonGroup aria-label="Project Options">
-                                <Button
-                                    variant="info"
-                                    size="sm"
-                                    as={Link}
-                                    to={'/projects/edit/' + props.match.params.id}
-                                >
+                                <Button variant="info" size="sm" as={Link} to={'/projects/edit/' + props.match.params.id}>
                                     <Icon path={mdiPencil} size={0.8} color="white" /> Edit Project
                                 </Button>
                                 <Button variant="danger" size="sm" onClick={() => setModalShow(!modalShow)}>
@@ -91,12 +80,7 @@ const Project = props => {
                                 </Button>
                             </ButtonGroup>
 
-                            <DeleteModal
-                                show={modalShow}
-                                onHide={() => setModalShow(!modalShow)}
-                                type="projects"
-                                id={project.id}
-                            />
+                            <DeleteModal show={modalShow} onHide={() => setModalShow(!modalShow)} type="projects" id={project.id} />
                         </Col>
                     </Row>
                 </Container>

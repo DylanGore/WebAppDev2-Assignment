@@ -8,6 +8,8 @@ import Icon from '@mdi/react';
 import { mdiPlaylistPlus } from '@mdi/js';
 import TaskList from '../tasks/TaskList';
 import PageTitle from '../misc/PageTitle';
+
+// Lists tasks
 const Tasks = () => {
     return (
         <Fragment>

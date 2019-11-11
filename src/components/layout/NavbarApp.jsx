@@ -10,21 +10,22 @@ import { mdiViewDashboardVariant, mdiLoginVariant, mdiLogoutVariant } from '@mdi
 // Navbar Links
 import NavbarLinks from './NavbarLinks';
 
+// App Navbar
 const NavbarApp = () => {
     const [user] = useAuthState(firebase.auth());
+
+    // Handle user logout
     const logout = () => {
-        firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                console.log('Signed user out!');
-                history.push('/login');
-            })
-            .catch(err => {
-                console.log(err.message);
-            });
+        // prettier-ignore
+        firebase.auth().signOut().then(() => {
+            console.log('Signed user out!');
+            history.push('/login');
+        }).catch(err => {
+            console.log(err.message);
+        });
     };
 
+    // Only display additional links if user is logged in
     const SelectNavbarLinks = () => {
         return user ? <NavbarLinks /> : null;
     };

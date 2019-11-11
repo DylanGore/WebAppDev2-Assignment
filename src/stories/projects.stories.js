@@ -16,16 +16,15 @@ stories.addDecorator(withKnobs);
 stories.add('Add/Edit Project', () => {
     return <AddEditProject />;
 });
+
 stories.add('Project', () => {
     const title = text('Title', 'Sample Project');
     const type = text('Type', 'Example');
-    const description = text(
-        'Description',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus facilisis nulla felis, quis cursus felis pharetra ut. Quisque accumsan turpis et blandit pharetra.'
-    );
+    const description = text('Description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus facilisis nulla felis, quis cursus felis pharetra ut. Quisque accumsan turpis et blandit pharetra.');
     const due = text('Due', '2019-11-01T23:59:00.000Z');
     return <Project title={title} type={type} description={description} due={due} />;
 });
+
 stories.add('SimpleProject', () => {
     const id = number('ID', 1);
     const title = text('Title', 'Sample Project');
@@ -38,6 +37,7 @@ stories.add('SimpleProject', () => {
     const project = { id: id, title: title, type: type, description: description };
     return <SimpleProject project={project} />;
 });
+
 stories.add('Project List', () => {
     const limit = number('Project Limit', 0);
     return <ProjectList limit={limit} />;

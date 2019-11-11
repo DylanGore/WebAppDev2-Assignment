@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Icon from '@mdi/react';
 import PageTitle from '../misc/PageTitle';
 
+// Main dashboard, lists projects and tasks and options to view more info/add each
 const Dashboard = () => {
     return (
         <Fragment>
