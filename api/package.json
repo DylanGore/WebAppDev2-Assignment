@@ -1,0 +1,26 @@
+{
+    "name": "webappdev2-assignment-api",
+    "version": "1.0.0",
+    "description": "API",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon --exec babel-node src/index.js"
+    },
+    "author": "Dylan Gore",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.4",
+        "@babel/core": "^7.7.4",
+        "@babel/node": "^7.7.4",
+        "@babel/preset-env": "^7.7.4",
+        "nodemon": "^2.0.1"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    }
+}
