@@ -1,6 +1,6 @@
 import express from 'express';
 import './env';
-import './db';
+import './db/db';
 
 // Express
 const app = express();

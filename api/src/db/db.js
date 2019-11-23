@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import loadProjects from './db/projectsData';
-import loadTasks from './db/tasksData';
-import loadClients from './db/clientsData';
+import { seedAll } from './SeedDB';
 
 // MongoDB
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -21,8 +19,6 @@ db.once('open', () => {
 });
 
 // Seed Database
-if (process.env.DB_SEED) {
-    loadProjects();
-    loadTasks();
-    loadClients();
+if (process.env.DB_SEED === 'true') {
+    seedAll();
 }
