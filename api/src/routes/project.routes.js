@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         let limit = 0;
-        if (req.query.limit != undefined) {
+        if (req.query.limit !== undefined) {
             limit = Number(req.query.limit);
         }
         const projects = await Project.find()
@@ -29,6 +29,14 @@ router.get('/:id', async (req, res) => {
         handleError(res, err.message);
     }
 });
+
+// POST - /api/projects (create new project)
+// prettier-ignore
+// router.post('/', asyncHandler(async (req, res) => {
+//     console.debug(req.body)
+//     const project = await Project.create(req.body);
+//     res.status(201).json(project);
+// }));
 
 /**
  * Handle general errors.

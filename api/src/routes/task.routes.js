@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
     try {
         let limit = 0;
         let project = {};
-        if (req.query.limit != undefined) {
+        if (req.query.limit !== undefined) {
             limit = Number(req.query.limit);
         }
-        if (req.query.project != undefined) {
+        if (req.query.project !== undefined) {
             project = { project: Number(req.query.project) };
         }
         const tasks = await Task.find(project)

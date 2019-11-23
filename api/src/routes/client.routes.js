@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         let limit = 0;
-        if (req.query.limit != undefined) {
+        if (req.query.limit !== undefined) {
             limit = Number(req.query.limit);
         }
         const clients = await Client.find()

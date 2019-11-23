@@ -7,4 +7,4 @@ const ClientSchema = new mongoose.Schema({
     id: { type: Number, required: true, min: 1, unique: true }
 });
 
-module.exports = mongoose.model('client', ClientSchema);
+export default mongoose.model('client', ClientSchema);
