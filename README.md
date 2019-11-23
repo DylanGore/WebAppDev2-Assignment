@@ -1,68 +1,218 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# B.Sc (Hons.) Level 8 - Assignment 1 - Single Page Application
 
-## Available Scripts
+**Name:** Dylan Gore
 
-In the project directory, you can run:
+**Public Demo URL:** [https://dylangore-wit-webappdev2.web.app/](https://dylangore-wit-webappdev2.web.app/)
 
-### `yarn start`
+## Overview
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This is a simple project management app. It has authentication and registion along with the ability to add, view, edit and remove projects. It also features client and task management.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Features
 
-### `yarn test`
+-   User authentication (Login, Registration, Password Reset)
+-   Custom componets created to handle route guarding (ensuring private routes can only be accessed by logged in users)
+-   Full CRUD functionallity for projects, clients and tasks
+-   The user's avatar is downloaded from Gravatar if it exists, if not a default image is displayed
+-   Front end deployed to Firebase Hosting
+-   Connection to a json-server backend (hosted on my own sever)
+-   Responsive design
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup
 
-### `yarn build`
+1. Create the .env file
+   To run the app locally you must create and populate .env file, a sample is provided (sample.env)
+   For a local run the backend will be located at http://localhost:3002/ - this must be put in the .env file
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    (If you're deploying the app, don't forget to create a deploy.env file!)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+2. Install required dependanceis using NPM
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ```bash
+    npm install
+    ```
 
-### `yarn eject`
+3. Run the json-server backend
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    ```bash
+    npm run fake-backend
+    ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    The will be available at [http://localhost:3002](http://localhost:3002)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Run the React App
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    ```bash
+    npm run start
+    ```
 
-## Learn More
+    The will be available at [http://localhost:3001](http://localhost:3001)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. Run the Storybook Server (Optional)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```bash
+    npm run storybook
+    ```
 
-### Code Splitting
+    The will be available at [http://localhost:3001](http://localhost:3001)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Data Model Design
 
-### Analyzing the Bundle Size
+![data-model](img/data-model.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+-   Tasks are linked to a project using a project id
+-   Clients are linked to a project using a project id
 
-### Making a Progressive Web App
+## UI Design
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Home
 
-### Advanced Configuration
+![home](img/home.png)
+The app home page.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### 404
 
-### Deployment
+![404](img/404.png)
+The 'Not Found' error page - is displayed if the URL doen't match something in the router.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+### 401
 
-### `yarn build` fails to minify
+![401](img/401.png)
+The 'Unauthorized' error page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Login
+
+![login](img/login.png)
+Allows the user to login to an existing account
+
+### Register
+
+![register](img/register.png)
+Allows the user to create a new account.
+
+### Reset Password
+
+![reset password](img/reset-password.png)
+Allows the user to have a password reset email sent for a forgotten password.
+
+### Dashboard
+
+![dashboard](img/dashboard.png)
+Shows a short list of projects and tasks, allows the user to view each in more detail or add a new project/task.
+
+### Projects
+
+![projects](img/projects.png)
+Shows a full list of projects.
+
+### Project
+
+![project](img/project.png)
+Shows a single project with full details.
+
+### Add/Edit Project
+
+![add-edit-project](img/add-edit-project.png)
+Allows the user to add a new poroject, the same form is uesd for editing an existing project, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Tasks
+
+![tasks](img/tasks.png)
+Shows a full list of projects.
+
+### Task
+
+![task](img/task.png)
+Shows a single task with full details.
+
+### Add/Edit Task
+
+![add-edit-task](img/add-edit-task.png)
+Allows the user to add a new task, the same form is uesd for editing an existing task, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Clients
+
+![clients](img/client.png)
+Shows a full list of clients.
+
+### Client
+
+![client](img/client.png)
+Shows a single client with full details.
+
+### Add/Edit Client
+
+![add-edit-client](img/add-edit-client.png)
+Allows the user to add a new client, the same form is uesd for editing an existing client, in that case the fields a pre-populated with the existing values and the submit button and page title are changed.
+
+### Delete
+
+![delete](img/delete.png)
+Prompts the user for confirmation before deleting an item.
+
+## Routing
+
+### General
+
+-   / (public) - home page
+-   /dashboard (auth required) - displays a short list of projects and tasks
+-   /404 (public) - not found error page (this is default for any unrecognised URL)
+
+### Projects
+
+-   /projects (auth required) - lists all projects and options to add a project/view in more detail
+-   /projects/add (auth required) - form to add a new project
+-   /projects/:id (auth required) - project info in full detail, option to edit/delete, lists tasks associated with that project
+-   /projects/edit/:id (auth required) - form to edit an existing project
+
+### Clients
+
+-   /clients (auth required) - lists all clients and options to add a client/view in more detail
+-   /clients/:id (auth required) - form to add a new client
+-   /clients/edit/:id (auth required) - client info in full detail, option to edit/delete
+-   /clients/add (auth required) - form to edit an existing client
+
+### Tasks
+
+-   /tasks (auth required) - lists all tasks and options to add a task/view in more detail
+-   /tasks/add (auth required) - form to add a new task
+-   /tasks/:id (auth required) - task info in full detail, option to edit/delete
+-   /tasks/edit/:id (auth required) - form to edit an existing task
+
+### Authentication
+
+-   /login (logged out users only, cannot access if logged in) - user login form, links to registration and password reset
+-   /register (logged out users only, cannot access if logged in) - user registration form
+-   /reset-password (public) - password reset form
+
+## Storybook
+
+### List of stories
+
+![stories](img/stories.png)
+
+### Storybook Addons
+
+-   **[knobs](https://www.npmjs.com/package/@storybook/addon-knobs)** - allows the user to modify props to pass to the component in real time (see below)
+    ![knobs](img/storybook-knobs.png)
+-   **[actions](https://www.npmjs.com/package/@storybook/addon-actions)** - shows a console message when certain actions are preformed (eg. clicking on a link)
+    ![storybook-actions](img/storybook-actions.png)
+-   **[viewport](https://www.npmjs.com/package/@storybook/addon-viewport)** - allows testing of component responsiveness by emulating different devies
+    ![storybook-viewport](img/storybook-viewport.png)
+
+## Backend (Optional)
+
+This app uses [json-server](https://github.com/typicode/json-server) as a backend. The app is setup to read the location of the backend from a .env file. This allows the backend to be deployed to a remote server and it's location to be passed into the app.
+
+## Authentication (Optional)
+
+Google's [Firebase](https://firebase.google.com) is used for authentication. User registration, login and password reset are all handled through the app. The package [react-firebase-hooks](https://github.com/csfrequency/react-firebase-hooks) is used to make Firebase integration work correctly and allows the user state (currently logged in user) to be accessed throughout the app.
+
+## Independent learning
+
+-   React hooks, useEffect and useState, functional components
+-   Connecting to the Gravatar API for user avatars
+-   Deploying to Firebase and deploying the json-server to my own server
+-   react-helmet for modifing the page title dynamically
+-   Moment for date formatting
+-   Using env-cmd to pass different .env files for different situations

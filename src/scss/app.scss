@@ -1,0 +1,97 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+// Bootstrap Variable Overrides
+// https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=0277BD
+$primary: #0277bd;
+$dark: #004c8c;
+$info: #0097a7;
+$light: #efefef;
+$font-family-sans-serif: 'Roboto',
+sans-serif;
+$enable-rounded: false;
+
+// Import Bootstrap and it's default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+// Full height container - height of navbar and footer
+.full-container {
+    height: calc(100vh - 120px);
+    // background: cadetblue;
+}
+
+// Full height row
+.full-row {
+    // background: red;
+    width: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+// Full width column, remove all padding and margin
+.full-col {
+    padding: 0;
+    margin: 0;
+}
+
+// Positiona particles.js background on homepage
+.particles {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+// Simple Project
+.simpleProject {
+    margin-bottom: 0.5em;
+}
+
+// Project List
+.projectList {
+    margin-bottom: 3em;
+}
+
+// Footer
+.footer {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background: $dark;
+    text-align: center;
+    color: $white;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+// Looding 
+.pageLoader {
+    margin: 4em 0;
+    padding: 2em;
+}
+
+// Make avatar round
+.avatar {
+    border-radius: 100%;
+}
+
+// Remove border from date/time field
+.react-datetime-picker__wrapper {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+// Remove padding from date/time field
+.react-datetime-picker {
+    padding: 6px;
+}
