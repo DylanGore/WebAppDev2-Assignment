@@ -9,4 +9,4 @@ const ProjectSchema = new mongoose.Schema({
     id: { type: String, required: true, unique: true }
 });
 
-module.exports = mongoose.model('project', ProjectSchema);
+export default mongoose.model('project', ProjectSchema);

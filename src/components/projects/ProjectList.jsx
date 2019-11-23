@@ -12,7 +12,7 @@ const ProjectList = ({ limit }) => {
     useEffect(() => {
         var url = '';
         if (limit && limit !== 0) {
-            url = process.env.REACT_APP_BACKEND_LOC + 'projects?start=0&_limit=' + limit;
+            url = process.env.REACT_APP_BACKEND_LOC + 'projects?limit=' + limit;
         } else {
             url = process.env.REACT_APP_BACKEND_LOC + 'projects';
         }

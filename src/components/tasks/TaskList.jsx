@@ -21,7 +21,7 @@ const TaskList = ({ project_id, limit }) => {
             // Set url based on if a limit prop was passed to the component
             var url = '';
             if (limit && limit !== 0) {
-                url = process.env.REACT_APP_BACKEND_LOC + 'tasks?start=0&_limit=' + limit;
+                url = process.env.REACT_APP_BACKEND_LOC + 'tasks?limit=' + limit;
             } else {
                 url = process.env.REACT_APP_BACKEND_LOC + 'tasks';
             }
