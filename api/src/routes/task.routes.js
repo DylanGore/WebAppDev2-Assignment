@@ -1,5 +1,5 @@
 import express from 'express';
-// import asyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 import Task from '../models/TaskModel';
 
 const router = express.Router();
@@ -27,12 +27,32 @@ router.get('/', async (req, res) => {
 // GET - /api/tasks/:id (single task)
 router.get('/:id', async (req, res) => {
     try {
-        const tasks = await Task.findOne(req.body.id);
+        const tasks = await Task.findOne({ id: req.params.id });
         res.status(200).json(tasks);
     } catch (err) {
         handleError(res, err.message);
     }
 });
+
+// POST - /api/tasks (creaate new task)
+// prettier-ignore
+router.post('/', asyncHandler(async (req, res) => {
+    let data = req.body;
+    if (req.body.id === undefined){
+        data = {...data, id: Number(await Task.countDocuments()) + 1}
+    }
+
+    let task = await Task.create(data);
+    res.status(201).json(task);
+}));
+
+// PUT - /api/tasks/:id (update existing task)
+// prettier-ignore
+router.put('/:id', asyncHandler(async (req, res) => {
+    if (req.body._id) delete req.body._id;
+    let task = await Task.update(req.body);
+    res.status(201).json(task);
+}));
 
 /**
  * Handle general errors.

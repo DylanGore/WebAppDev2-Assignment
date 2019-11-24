@@ -16,7 +16,7 @@ import DisplayMessage from '../misc/DisplayMessage';
 const AddEditTask = props => {
     const [projects, setProjects] = useState(null);
     const [pageInfo, setPageInfo] = useState({ title: 'Add a new Task', button: 'Add Task', icon: mdiPlus });
-    const [task, setTask] = useState({});
+    const [task, setTask] = useState({ state: 'in_progress' });
     const [taskId, setTaskId] = useState(null);
     const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);

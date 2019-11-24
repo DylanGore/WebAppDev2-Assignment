@@ -14,7 +14,7 @@ import DisplayMessage from '../misc/DisplayMessage';
 
 // Allows new projects to be added and existing projects to be edited
 const AddEditProject = props => {
-    const [project, setProject] = useState({ title: '' });
+    const [project, setProject] = useState({ title: '', type: 'Website', client: 1 });
     const [pageInfo, setPageInfo] = useState({ title: 'Add a new Project', button: 'Add Project', icon: mdiPlus });
     const [projectId, setProjectId] = useState(null);
     const [clients, setClients] = useState(null);

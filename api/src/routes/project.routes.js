@@ -1,6 +1,7 @@
 import express from 'express';
-// import asyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 import Project from '../models/ProjectModel';
+import { createProject } from '../db/create';
 
 const router = express.Router();
 
@@ -23,8 +24,8 @@ router.get('/', async (req, res) => {
 // GET - /api/projects/:id (single project)
 router.get('/:id', async (req, res) => {
     try {
-        const projects = await Project.findOne(req.body.id);
-        res.status(200).json(projects);
+        const project = await Project.findOne({ id: req.params.id });
+        res.status(200).json(project);
     } catch (err) {
         handleError(res, err.message);
     }
@@ -32,11 +33,23 @@ router.get('/:id', async (req, res) => {
 
 // POST - /api/projects (create new project)
 // prettier-ignore
-// router.post('/', asyncHandler(async (req, res) => {
-//     console.debug(req.body)
-//     const project = await Project.create(req.body);
-//     res.status(201).json(project);
-// }));
+router.post('/', asyncHandler(async (req, res) => {
+    let data = req.body;
+    if (req.body.id === undefined){
+        data = {...data, id: Number(await Project.countDocuments()) + 1}
+    }
+
+    let project = await Project.create(data);
+    res.status(201).json(project);
+}));
+
+// PUT - /api/projects/:id (update existing project)
+// prettier-ignore
+router.put('/:id', asyncHandler(async (req, res) => {
+    if (req.body._id) delete req.body._id;
+    let project = await Project.update(req.body);
+    res.status(201).json(project);
+}));
 
 /**
  * Handle general errors.

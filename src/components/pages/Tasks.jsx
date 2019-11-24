@@ -18,7 +18,7 @@ const Tasks = () => {
                 <Row>
                     <Col>
                         <h1>Tasks</h1>
-                        <Button variant="primary" size="sm" as={Link} to="/projects/add/" className="my-2">
+                        <Button variant="primary" size="sm" as={Link} to="/tasks/add/" className="my-2">
                             <Icon path={mdiPlaylistPlus} size={0.8} color="white" /> Add Task
                         </Button>
                         <TaskList />
