@@ -1,7 +1,6 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Project from '../models/ProjectModel';
-import { createProject } from '../db/create';
 
 const router = express.Router();
 

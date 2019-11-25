@@ -4,9 +4,17 @@ import './db/db';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import admin from 'firebase-admin';
+import serviceAccount from '../serviceAccount.json';
 import projectRoutes from './routes/project.routes';
 import taskRoutes from './routes/task.routes';
 import clientRoutes from './routes/client.routes';
+
+// Initialise Firebase Admin
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_DB_URL
+});
 
 // Setup Express
 const app = express();
@@ -18,13 +26,30 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Checks request token against Firebase
+function checkAuth(req, res, next) {
+    if (req.headers.authtoken) {
+        // prettier-ignore
+        admin.auth().verifyIdToken(req.headers.authtoken).then(() => {
+            next()
+        }).catch(() => {
+            res.status(403).send('Unauthorized')
+        });
+    } else {
+        res.status(403).send('Unauthorized');
+    }
+}
+
 // Routes
+// app.use('/api/projects', checkAuth, projectRoutes);
+// app.use('/api/tasks', checkAuth, taskRoutes);
+// app.use('/api/clients', checkAuth, clientRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/clients', clientRoutes);
 
 // Root URL
-app.get('/', function(req, res) {
+app.get('/api', function(req, res) {
     res.status(200).send('Project Manager API');
 });
 
