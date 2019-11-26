@@ -50,6 +50,15 @@ router.put('/:id', asyncHandler(async (req, res) => {
     res.status(201).json(client);
 }));
 
+// DELETE - /api/clients/:id (delete client)
+// prettier-ignore
+router.delete('/:id', asyncHandler(async (req, res) => {
+    const client = await Client.findOne({ id: req.params.id });
+    if (!client) return res.send(404);
+    await client.remove();
+    return res.status(200).send(`Deleted client ${req.params.id}`);
+}));
+
 /**
  * Handle general errors.
  * @param {object} res The response object

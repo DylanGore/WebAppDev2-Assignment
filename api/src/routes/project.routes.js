@@ -50,6 +50,15 @@ router.put('/:id', asyncHandler(async (req, res) => {
     res.status(201).json(project);
 }));
 
+// DELETE - /api/projects/:id (delete project)
+// prettier-ignore
+router.delete('/:id', asyncHandler(async (req, res) => {
+    const project = await Project.findOne({ id: req.params.id });
+    if (!project) return res.send(404);
+    await project.remove();
+    return res.status(200).send(`Deleted project ${req.params.id}`);
+}));
+
 /**
  * Handle general errors.
  * @param {object} res The response object

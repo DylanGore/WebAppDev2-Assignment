@@ -54,6 +54,15 @@ router.put('/:id', asyncHandler(async (req, res) => {
     res.status(201).json(task);
 }));
 
+// DELETE - /api/tasks/:id (delete task)
+// prettier-ignore
+router.delete('/:id', asyncHandler(async (req, res) => {
+    const task = await Task.findOne({ id: req.params.id });
+    if (!task) return res.send(404);
+    await task.remove();
+    return res.status(200).send(`Deleted task ${req.params.id}`);
+}));
+
 /**
  * Handle general errors.
  * @param {object} res The response object
