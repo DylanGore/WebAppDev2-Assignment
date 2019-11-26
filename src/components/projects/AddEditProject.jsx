@@ -20,11 +20,12 @@ const AddEditProject = props => {
     const [clients, setClients] = useState(null);
     const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         // prettier-ignore
         // Get list of clients to populate the clients field in the form
-        axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients').then(res => {
+        axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients', header).then(res => {
             setClients(res.data);
         }).catch(err => console.error('Error getting clients', err.message));
 
@@ -35,12 +36,12 @@ const AddEditProject = props => {
 
             // prettier-ignore
             // Get project to edit and populate the project state object and form
-            axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.match.params.id).then(res => {
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.match.params.id, header).then(res => {
                 setPageInfo({ title: 'Edit Project: ' + res.data.title, button: 'Edit Project', icon: mdiPencil });
                 setProject({ ...res.data, due: null });
             }).catch(err => console.error(err.message));
         }
-    }, [props.match.params.id]);
+    }, [props.match.params.id, header]);
 
     // Save any changes in form to state
     const handleChange = e => {
@@ -69,13 +70,13 @@ const AddEditProject = props => {
             if (projectId) {
                 // Edit Project
                 // prettier-ignore
-                axios.put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + projectId, project).then(res => {
+                axios.put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + projectId, project, header).then(res => {
                     setMessage({ type: 'success', value: 'Project Edit Successful!' });
                 }).catch(err => setMessage({ type: 'danger', value: err.message }));
             } else {
                 // Add Project
                 // prettier-ignore
-                axios.post(process.env.REACT_APP_BACKEND_LOC + 'projects', project).then(res => {
+                axios.post(process.env.REACT_APP_BACKEND_LOC + 'projects', project, header).then(res => {
                     setMessage({ type: 'success', value: 'Project Added!' });
                 }).catch(err => setMessage({ type: 'danger', value: err.message }));
             }

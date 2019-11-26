@@ -18,6 +18,7 @@ const Client = props => {
     const [client, setClient] = useState({});
     const [loading, setLoading] = useState(true);
     const [modalShow, setModalShow] = useState(false);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         if (props.match.params.id) {
@@ -25,12 +26,12 @@ const Client = props => {
             var id = props.match.params.id.toString();
             // prettier-ignore
             // Use axios to request client info, redirect to 404 if there is an error
-            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id).then(res => {
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + id, header).then(res => {
                 setClient(res.data);
                 setLoading(false);
             }).catch(() => history.push('/404'));
         }
-    }, [props.match.params.id]);
+    }, [props.match.params.id, header]);
 
     // Use props for project info if they exist (used mainly for Storybook support)
     useEffect(() => {

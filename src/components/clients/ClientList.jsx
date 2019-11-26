@@ -10,6 +10,7 @@ import Loading from '../layout/Loading';
 const ClientList = ({ limit }) => {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         // Set url based on if a limit prop was passed to the component
@@ -22,11 +23,11 @@ const ClientList = ({ limit }) => {
 
         // prettier-ignore
         // Get list of clients
-        axios.get(url).then(res => {
+        axios.get(url, header).then(res => {
             setClients(res.data);
             setLoading(false);
         }).catch(err => console.error('Error getting clients', err.message));
-    }, [limit]);
+    }, [limit, header]);
 
     if (!loading) {
         return (

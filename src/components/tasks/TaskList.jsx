@@ -8,12 +8,13 @@ import Loading from '../layout/Loading';
 const TaskList = ({ project_id, limit }) => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         if (project_id) {
             // prettier-ignore
             // If the project ID prop is passed, get tasks for a specific project only
-            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks?project=' + project_id).then(res => {
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks?project=' + project_id, header).then(res => {
                 setTasks(res.data);
                 setLoading(false);
             }).catch(err => console.error('Error getting tasks for project', err.message));
@@ -28,12 +29,12 @@ const TaskList = ({ project_id, limit }) => {
 
             // prettier-ignore
             // Get tasks
-            axios.get(url).then(res => {
+            axios.get(url, header).then(res => {
                 setTasks(res.data);
                 setLoading(false);
             }).catch(err => console.error('Error getting tasks', err.message));
         }
-    }, [project_id, limit]);
+    }, [project_id, limit, header]);
 
     // Set tasks color based on state
     const getTaskColor = task => {

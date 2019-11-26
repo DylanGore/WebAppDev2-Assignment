@@ -18,6 +18,7 @@ const AddEditClient = props => {
     const [clientId, setClientId] = useState(null);
     const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         // If there is an id paramater in the URL, set to edit mode
@@ -26,12 +27,12 @@ const AddEditClient = props => {
             setClientId(props.match.params.id);
             // prettier-ignore
             // Get list of clients to populate the clients field in the form
-            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + props.match.params.id).then(res => {
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'clients/' + props.match.params.id, header).then(res => {
                 setPageInfo({ title: 'Edit Client: ' + res.data.name, button: 'Edit Client', icon: mdiPencil });
                 setClient(res.data);
             }).catch(err => console.error('Error getting clients', err.message));
         }
-    }, [props.match.params.id]);
+    }, [props.match.params.id, header]);
 
     // Save any changes in form to state
     const handleChange = e => {
@@ -52,7 +53,7 @@ const AddEditClient = props => {
             if (clientId) {
                 // Edit Client
                 // prettier-ignore
-                axios.put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client).then(res => {
+                axios.put(process.env.REACT_APP_BACKEND_LOC + 'clients/' + clientId, client, header).then(res => {
                     setMessage({ type: 'success', value: 'Client Edit Successful!' });
                 }).catch(err => {
                     setMessage({ type: 'danger', value: err.message });
@@ -60,7 +61,7 @@ const AddEditClient = props => {
             } else {
                 // Add Client
                 // prettier-ignore
-                axios.post(process.env.REACT_APP_BACKEND_LOC + 'clients', client).then(res => {
+                axios.post(process.env.REACT_APP_BACKEND_LOC + 'clients', client, header).then(res => {
                     setMessage({ type: 'success', value: 'Client Added!' });
                 }).catch(err => {
                     setMessage({ type: 'danger', value: err.message });

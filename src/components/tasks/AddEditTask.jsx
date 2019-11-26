@@ -20,11 +20,12 @@ const AddEditTask = props => {
     const [taskId, setTaskId] = useState(null);
     const [message, setMessage] = useState(null);
     const [validated, setValidated] = useState(false);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     useEffect(() => {
         // prettier-ignore
         // Get list of tasks to populate the tasks field in the form
-        axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects').then(res => {
+        axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects', header).then(res => {
             setProjects(res.data);
         }).catch(err => console.error('Error getting tasks', err.message));
 
@@ -34,12 +35,12 @@ const AddEditTask = props => {
             setTaskId(props.match.params.id);
             // prettier-ignore
             // Get task to edit and populate the task state object and form
-            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + props.match.params.id).then(res => {
+            axios.get(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + props.match.params.id, header).then(res => {
                 setPageInfo({ title: 'Edit Task: ' + res.data.id, button: 'Edit Task', icon: mdiPencil });
                 setTask({ ...res.data, due: null });
             }).catch(err =>  console.error(err.message));
         }
-    }, [props.match.params.id]);
+    }, [props.match.params.id, header]);
 
     // Save any changes in form to state
     const handleChange = e => {
@@ -67,13 +68,13 @@ const AddEditTask = props => {
             if (taskId) {
                 // Edit Task
                 // prettier-ignore
-                axios.put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task).then(res => {
+                axios.put(process.env.REACT_APP_BACKEND_LOC + 'tasks/' + taskId, task, header).then(res => {
                     setMessage({ type: 'success', value: 'Task Edit Successful!' });
                 }).catch(err => setMessage({ type: 'danger', value: err.message }));
             } else {
                 // Add Task
                 // prettier-ignore
-                axios.post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task).then(res => {
+                axios.post(process.env.REACT_APP_BACKEND_LOC + 'tasks', task, header).then(res => {
                     setMessage({ type: 'success', value: 'Task Added!' });
                 }).catch(err => setMessage({ type: 'danger', value: err.message }));
             }

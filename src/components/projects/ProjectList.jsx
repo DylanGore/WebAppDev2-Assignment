@@ -7,6 +7,7 @@ import Loading from '../layout/Loading';
 const ProjectList = ({ limit }) => {
     const [projects, setProjects] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [header] = useState({ headers: { AuthToken: localStorage.getItem('authToken') } });
 
     // Use axios to request the list of all projects
     useEffect(() => {
@@ -19,11 +20,11 @@ const ProjectList = ({ limit }) => {
 
         // prettier-ignore
         // Get projects
-        axios.get(url).then(res => {
+        axios.get(url, header).then(res => {
             setProjects(res.data);
             setLoading(false);
         }).catch(err =>  console.error('Error getting projects', err.message));
-    }, [limit]);
+    }, [limit, header]);
 
     if (!loading) {
         return (

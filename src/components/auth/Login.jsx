@@ -34,6 +34,10 @@ const Login = () => {
             // prettier-ignore
             firebase.auth().signInWithEmailAndPassword(formData.email, formData.password).then(() => {
                 setMessage({ value: 'Login Successful!', type: 'success' });
+                firebase.auth().currentUser.getIdToken(true).then((token) => {
+                    localStorage.setItem('authToken', token)
+                    console.log("Saved auth token.")
+                }).catch(err => console.error(err))
                 history.push('/dashboard');
             }).catch(err => {
                 setMessage({ value: err.message, type: 'danger' });

@@ -65,6 +65,10 @@ const Register = () => {
                     }).catch(err => {
                         console.error('Error updating profile', err.message);
                     });
+                cred.user.getIdToken(true).then((token) => {
+                    localStorage.setItem('authToken', token)
+                    console.log("Saved auth token.")
+                }).catch(err => console.error(err))
             }).catch(err => {
                 setMessage({ value: err.message, type: 'danger' });
                 console.error('User creation error', err.message);

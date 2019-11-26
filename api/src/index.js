@@ -11,17 +11,22 @@ import taskRoutes from './routes/task.routes';
 import clientRoutes from './routes/client.routes';
 
 // Initialise Firebase Admin
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DB_URL
-});
+try {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: process.env.FIREBASE_DB_URL
+    });
+    console.info('Firebase: Authenticated with Firebase!');
+} catch (err) {
+    console.error(`Firebase: Auth Error: ${err}`);
+}
 
 // Setup Express
 const app = express();
 const port = process.env.PORT || 3002;
 
 // Middleware
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,12 +46,12 @@ function checkAuth(req, res, next) {
 }
 
 // Routes
-// app.use('/api/projects', checkAuth, projectRoutes);
-// app.use('/api/tasks', checkAuth, taskRoutes);
-// app.use('/api/clients', checkAuth, clientRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/tasks', taskRoutes);
-app.use('/api/clients', clientRoutes);
+app.use('/api/projects', checkAuth, projectRoutes);
+app.use('/api/tasks', checkAuth, taskRoutes);
+app.use('/api/clients', checkAuth, clientRoutes);
+// app.use('/api/projects', projectRoutes);
+// app.use('/api/tasks', taskRoutes);
+// app.use('/api/clients', clientRoutes);
 
 // Root URL
 app.get('/api', function(req, res) {
@@ -60,5 +65,5 @@ app.use('*', function(req, res, next) {
 
 // Run Server
 app.listen(port, function() {
-    console.log('Project Manager API listening on port ' + port);
+    console.log('Express: Project Manager API listening on port ' + port);
 });
