@@ -2,10 +2,11 @@ import fs from 'fs';
 import projectModel from '../models/ProjectModel';
 import taskModel from '../models/TaskModel';
 import clientModel from '../models/ClientModel';
+import path from 'path';
 
 async function seedAll() {
     // Load data from JSON file that was used by json-server
-    let dbJson = JSON.parse(fs.readFileSync('../db.json'));
+    let dbJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'db.json')));
 
     // Save data to each collection
     await loadCollection(dbJson.projects, projectModel, 'projects');

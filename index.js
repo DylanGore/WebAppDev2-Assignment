@@ -1,14 +1,16 @@
 import express from 'express';
+import path from 'path';
 import './env';
 import './db/db';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import admin from 'firebase-admin';
-import serviceAccount from '../serviceAccount.json';
+import serviceAccount from './serviceAccount.json';
 import projectRoutes from './routes/project.routes';
 import taskRoutes from './routes/task.routes';
 import clientRoutes from './routes/client.routes';
+// import history from 'connect-history-api-fallback';
 
 const env = process.env.NODE_ENV || 'dev';
 console.info(`Environment: ${env}`);
@@ -26,6 +28,9 @@ try {
 // Setup Express
 const app = express();
 const port = process.env.PORT || 3002;
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'react/build')));
+// app.use(history());
 
 // Middleware
 app.use(morgan('dev'));
@@ -73,8 +78,12 @@ app.get('/api', function(req, res) {
     res.status(200).send('Project Manager API');
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'react/build/index.html'));
+});
+
 // Handle 404 errors
-app.use('*', function(req, res, next) {
+app.use('*', function(req, res) {
     return res.status(404).send(`Error 404 - Not Found`);
 });
 
