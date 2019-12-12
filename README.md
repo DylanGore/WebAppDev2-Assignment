@@ -1,8 +1,10 @@
-# B.Sc (Hons.) Level 8 - Assignment 2
+# B.Sc (Hons.) Level 8 - Assignment 2 - Web API
 
 **Name:** Dylan Gore
 
 [React App README](/react/README.md)
+
+[Live Demo of Complete Project](https://webapp.wit.dylangore.space)
 
 ## Overview
 
@@ -17,7 +19,7 @@ The is the API portion of the project management app. For full details on the Re
 
 ## Running the API - Development
 
-The API can be run in development mode by running
+The API can be run in development mode by running:
 
 ```bash
 npm run dev
@@ -32,7 +34,7 @@ This project is setup to be deployed to Heroku but can also run on other service
 
 ### Heroku
 
-Simply run
+Simply run:
 
 ```bash
 heroku create && git push heroku master
