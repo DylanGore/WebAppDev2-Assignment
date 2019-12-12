@@ -10,7 +10,6 @@ import serviceAccount from './serviceAccount.json';
 import projectRoutes from './routes/project.routes';
 import taskRoutes from './routes/task.routes';
 import clientRoutes from './routes/client.routes';
-// import history from 'connect-history-api-fallback';
 
 const env = process.env.NODE_ENV || 'dev';
 console.info(`Environment: ${env}`);
@@ -30,7 +29,6 @@ const app = express();
 const port = process.env.PORT || 3002;
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'react/build')));
-// app.use(history());
 
 // Middleware
 app.use(morgan('dev'));
