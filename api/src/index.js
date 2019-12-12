@@ -10,6 +10,8 @@ import projectRoutes from './routes/project.routes';
 import taskRoutes from './routes/task.routes';
 import clientRoutes from './routes/client.routes';
 
+const env = process.env.NODE_ENV || 'dev';
+console.info(`Environment: ${env}`);
 // Initialise Firebase Admin
 try {
     admin.initializeApp({
@@ -33,12 +35,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Checks request token against Firebase
 function checkAuth(req, res, next) {
+    // Handle dev auth token
     if (req.headers.authtoken) {
         // prettier-ignore
         admin.auth().verifyIdToken(req.headers.authtoken).then(() => {
             next()
-        }).catch(() => {
-            res.status(403).send('Unauthorized')
+        }).catch((err) => {
+            // console.error(err.message)
+            if (env === 'dev' || env === 'test') {
+                if (req.headers.authtoken === 'dev') {
+                    console.log('Found dev/test token');
+                    next();
+                }else{
+                    res.status(403).send('Unauthorized');
+                }
+            }else{
+                res.status(403).send('Unauthorized');
+            }
+            
         });
     } else {
         res.status(403).send('Unauthorized');
