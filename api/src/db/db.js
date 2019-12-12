@@ -1,9 +1,19 @@
 import mongoose from 'mongoose';
 import seedDB from './seedDB';
+import { Mockgoose } from 'mockgoose';
 
 // Setup and connect to MongoDB
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
-mongoose.connect(process.env.DB_URL, mongoOpts);
+
+if (process.env.NODE_ENV === 'test') {
+    const mockgoose = new Mockgoose(mongoose);
+    mockgoose.prepareStorage().then(() => {
+        mongoose.connect(process.env.DB_URL, mongoOpts);
+    });
+} else {
+    mongoose.connect(process.env.DB_URL, mongoOpts);
+}
+
 const db = mongoose.connection;
 
 // Handle Errors
