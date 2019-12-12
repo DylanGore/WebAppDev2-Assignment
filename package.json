@@ -1,76 +1,82 @@
 {
-  "name": "webappdev2-assignment",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@mdi/js": "^4.5.95",
-    "@mdi/react": "^1.2.1",
-    "axios": "^0.19.0",
-    "bootstrap": "^4.3.1",
-    "env-cmd": "^10.0.1",
-    "firebase": "^7.3.0",
-    "gravatar": "^1.8.0",
-    "moment": "^2.24.0",
-    "node-sass": "^4.13.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.11.0",
-    "react-bootstrap": "^1.0.0-beta.14",
-    "react-datetime-picker": "^2.7.1",
-    "react-dom": "^16.11.0",
-    "react-firebase-hooks": "^2.1.1",
-    "react-helmet": "^5.2.1",
-    "react-moment": "^0.9.6",
-    "react-particles-js": "^2.7.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build:deploy": "env-cmd -f deploy.env npm run build && firebase deploy",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook --port 3001",
-    "build-storybook": "build-storybook",
-    "fake-backend": "json-server db.json -p 3002 -H 0.0.0.0"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
+    "name": "webappdev2-assignment-api",
+    "version": "1.0.0",
+    "description": "API",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint index.js --fix",
+        "start": "npm run lint && cross-env NODE_ENV=production babel-node index.js",
+        "dev": "npm run lint && nodemon --exec cross-env NODE_ENV=dev babel-node index.js",
+        "test": "cross-env NODE_ENV=test mocha --require @babel/register --require @babel/polyfill  --exit",
+        "heroku-postbuild": "cd react && npm install --only=dev && npm install && npm run build"
+    },
+    "author": "Dylan Gore",
+    "license": "ISC",
+    "dependencies": {
+        "connect-history-api-fallback": "^1.6.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-async-handler": "^1.1.4",
+        "firebase-admin": "^8.8.0",
+        "morgan": "^1.9.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.5",
+        "@babel/core": "^7.7.5",
+        "@babel/node": "^7.7.4",
+        "@babel/polyfill": "^7.7.0",
+        "@babel/preset-env": "^7.7.6",
+        "babel-eslint": "^10.0.3",
+        "body-parser": "^1.19.0",
+        "cross-env": "^6.0.3",
+        "eslint": "^6.7.2",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-babel": "^5.3.0",
+        "eslint-plugin-prettier": "^3.1.1",
+        "mocha": "^6.2.2",
+        "mockgoose": "^8.0.4",
+        "mongoose": "^5.8.0",
+        "nodemon": "^2.0.2",
+        "prettier": "^1.19.1",
+        "should": "^13.2.3",
+        "sinon": "^7.5.0",
+        "sinon-test": "^2.4.1",
+        "supertest": "^4.0.2"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
+    "eslintConfig": {
+        "env": {
+            "es6": true,
+            "node": true
+        },
+        "extends": [
+            "eslint:recommended",
+            "prettier"
+        ],
+        "plugins": [
+            "prettier",
+            "babel"
+        ],
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly"
+        },
+        "parserOptions": {
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        },
+        "rules": {
+            "prettier/prettier": "error"
+        }
+    },
+    "prettier": {
+        "singleQuote": true,
+        "tabWidth": 4,
+        "printWidth": 150
     }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "tabWidth": 4,
-    "printWidth": 300
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@storybook/addon-actions": "^5.2.6",
-    "@storybook/addon-knobs": "^5.2.6",
-    "@storybook/addon-links": "^5.2.6",
-    "@storybook/addon-viewport": "^5.2.6",
-    "@storybook/addons": "^5.2.6",
-    "@storybook/react": "^5.2.6",
-    "babel-loader": "^8.0.6",
-    "json-server": "^0.15.1",
-    "prettier": "^1.19.1",
-    "storybook-react-router": "^1.0.8"
-  }
 }
