@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint index.js --fix",
-        "start": "npm run lint && cross-env NODE_ENV=production babel-node index.js",
+        "start": "cross-env NODE_ENV=production babel-node index.js",
         "dev": "npm run lint && nodemon --exec cross-env NODE_ENV=dev babel-node index.js",
         "test": "cross-env NODE_ENV=test mocha --require @babel/register --require @babel/polyfill  --exit",
         "heroku-postbuild": "cd react && npm install --only=dev && npm install && npm run build"
