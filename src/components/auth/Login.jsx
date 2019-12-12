@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PageTitle from '../misc/PageTitle';
 import DisplayMessage from '../misc/DisplayMessage';
+import { hostname } from 'os';
 
 // User login page
 const Login = () => {
@@ -39,6 +40,7 @@ const Login = () => {
                     console.log("Saved auth token.")
                 }).catch(err => console.error(err))
                 history.push('/dashboard');
+                hostname.go(0);
             }).catch(err => {
                 setMessage({ value: err.message, type: 'danger' });
             });

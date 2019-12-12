@@ -5,7 +5,8 @@
       "client": 1,
       "description": "Project description",
       "due": "2019-11-01T23:59:00.000Z",
-      "id": 1
+      "id": 1,
+      "notes": []
     },
     {
       "title": "Project 2",
@@ -13,7 +14,8 @@
       "client": 1,
       "description": "Project description",
       "due": "2019-11-01T23:59:00.000Z",
-      "id": 2
+      "id": 2,
+      "notes": []
     },
     {
       "title": "Project 3",
@@ -21,7 +23,8 @@
       "client": 2,
       "description": "Project description",
       "due": "2019-11-01T23:35:00.000Z",
-      "id": 3
+      "id": 3,
+      "notes": []
     },
     {
       "title": "Project 4",
@@ -29,7 +32,8 @@
       "client": 4,
       "description": "Example",
       "due": "2019-12-02T23:59:00.000Z",
-      "id": 4
+      "id": 4,
+      "notes": []
     },
     {
       "title": "Project 5",
@@ -37,7 +41,8 @@
       "client": "3",
       "description": "Example Edit",
       "due": "2019-11-01T23:09:00.000Z",
-      "id": 5
+      "id": 5,
+      "notes": []
     },
     {
       "title": "Project 6",
@@ -45,7 +50,8 @@
       "client": 4,
       "description": "Example",
       "due": "2019-11-01T13:00:00.000Z",
-      "id": 6
+      "id": 6,
+      "notes": []
     }
   ],
   "tasks": [{

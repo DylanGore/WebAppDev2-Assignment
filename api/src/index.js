@@ -41,8 +41,9 @@ function checkAuth(req, res, next) {
         admin.auth().verifyIdToken(req.headers.authtoken).then(() => {
             next()
         }).catch((err) => {
-            // console.error(err.message)
+            console.error(err.message)
             if (env === 'dev' || env === 'test') {
+                console.log('Dev/test mode')
                 if (req.headers.authtoken === 'dev') {
                     console.log('Found dev/test token');
                     next();

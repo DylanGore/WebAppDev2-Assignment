@@ -46,7 +46,7 @@ router.post('/', asyncHandler(async (req, res) => {
 // prettier-ignore
 router.put('/:id', asyncHandler(async (req, res) => {
     if (req.body._id) delete req.body._id;
-    let project = await Project.update(req.body);
+    let project = await Project.updateOne(req.body);
     res.status(201).json(project);
 }));
 
@@ -57,6 +57,54 @@ router.delete('/:id', asyncHandler(async (req, res) => {
     if (!project) return res.send(404);
     await project.remove();
     return res.status(200).send(`Deleted project ${req.params.id}`);
+}));
+
+// NOTES#
+// prettier-ignore
+router.post('/:id/new_note', asyncHandler(async (req, res) => {
+    const project = await Project.findOne({ id: req.params.id });
+    if (!project) return res.send(404);
+    if (project._id) delete project._id;
+    let data = req.body
+    project.notes.push(data)
+    await Project.updateOne(project);
+    res.sendStatus(201);
+}));
+
+// prettier-ignore
+router.delete('/:id/del_note/:noteId', asyncHandler(async (req, res) => {
+    let project = await Project.findOne({ id: req.params.id });
+    // if (!project) return res.send(404);
+    let didProjectUpdate = false;
+    didProjectUpdate = await project.notes.filter(async (n) => {
+        if (n.id === req.params.noteId){
+            console.log(`nf: ${n}`)
+            project.notes.splice(project.notes.indexOf(n), 1);
+            console.log(project)
+            await Project.updateOne(project)
+            return true;
+        }
+    }).pop()
+
+    if(didProjectUpdate){
+        console.log("Delete Me")
+        return res.sendStatus(201);
+    }else{
+        return res.sendStatus(500)
+    }
+
+    
+    // project.notes = 
+
+    // 
+    //         console.log(`Deleted Note`)
+    //         console.log(project)
+    //         return res.status(200).send(`Deleted Note from project ${req.params.id}`);
+
+    res.sendStatus(418)
+
+    // await project.remove();
+    
 }));
 
 /**
