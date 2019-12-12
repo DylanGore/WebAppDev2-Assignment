@@ -62,13 +62,14 @@ router.delete('/:id', asyncHandler(async (req, res) => {
 // NOTES#
 // prettier-ignore
 router.post('/:id/new_note', asyncHandler(async (req, res) => {
-    const project = await Project.findOne({ id: req.params.id });
-    if (!project) return res.send(404);
+    let project = await Project.findOne({ id: req.params.id });
     if (project._id) delete project._id;
+    console.log(project)
+    if (!project) return res.send(404);
     let data = req.body
     project.notes.push(data)
     await Project.updateOne(project);
-    res.sendStatus(201);
+    res.status(201).json(project);
 }));
 
 // prettier-ignore
@@ -101,7 +102,7 @@ router.delete('/:id/del_note/:noteId', asyncHandler(async (req, res) => {
     //         console.log(project)
     //         return res.status(200).send(`Deleted Note from project ${req.params.id}`);
 
-    res.sendStatus(418)
+    // res.sendStatus(418)
 
     // await project.remove();
     

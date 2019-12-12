@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import history from '../../config/history';
 import Form from 'react-bootstrap/Form';
+import { deepEqual } from 'assert';
 
 // Deletes a specified object, prompting the user for confirmation before doing so
 const NoteModal = props => {
@@ -25,20 +26,22 @@ const NoteModal = props => {
 
     // Delete the object and change page to homepage after
     const handleAdd = () => {
-        console.log(note);
-        const project = { notes: [] };
-        project.notes.push(note);
-        console.log(project);
         // prettier-ignore
-        axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.id, header).then(res => {
-                project.notes = res.data.notes;
-                project.notes.push(note)
-                console.info('Got notes!');
-                axios.put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.id, project, header).then(res => {
-                    console.info('Note Add Successful!');
-                    history.go(0);
-                }).catch(err => console.error(err.message));
-            }).catch(err => console.error(err.message));
+        // axios.get(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.id, header).then(res => {
+        //     let project = res.data;
+        //     project.notes.push(note)
+        //     delete project._id
+        //     console.info('Got notes!');
+        //     console.log(project)
+        //     axios.put(process.env.REACT_APP_BACKEND_LOC + 'projects/' + props.id, project, header).then(res => {
+        //         console.info('Note Add Successful!');
+        //         // history.go(0);
+        //     }).catch(err => console.error(err.message));
+        // }).catch(err => console.error(err.message));
+
+        axios.post(`${process.env.REACT_APP_BACKEND_LOC}projects/${props.id}/new_note`, note, header).then(res =>{
+            console.info('Added Note')
+        }).catch(err => console.error(err.message));
 
         props.onHide();
     };
