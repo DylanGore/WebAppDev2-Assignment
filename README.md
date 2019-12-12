@@ -1,4 +1,4 @@
-# B.Sc (Hons.) Level 8 - Assignment 2 - Single Page Application
+# B.Sc (Hons.) Level 8 - Assignment 2
 
 **Name:** Dylan Gore
 
@@ -37,3 +37,17 @@ Simply run
 ```bash
 heroku create && git push heroku master
 ```
+
+### Other
+
+To deploy to a linux host, run:
+
+```bash
+npm run start
+```
+
+PM2 or similar is recommended.
+
+The react app must be built first if running everything behind Express.
+
+If the react app is being run in development mode, there is no need to build it first.
